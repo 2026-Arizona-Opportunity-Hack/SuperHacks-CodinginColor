@@ -4,12 +4,19 @@ import { getT } from "@/i18n/server";
 import { Reveal, HeroCode, CountUp } from "@/components/landing/Motion";
 import { q } from "@/lib/db";
 import { learningGain } from "@/lib/stats";
+import { ImpactGlobe } from "@/components/landing/ImpactGlobe";
+import { LOCALES } from "@/i18n/config";
 
 export default async function Home() {
   const t = await getT();
   // Live numbers from the database, not hard-coded marketing copy.
   const [gain] = await learningGain({ concept: "loops", cohort: "Maryvale Fall 2026" });
   const [{ n: students }] = await q<{ n: number }>("SELECT count(*)::int AS n FROM students");
+  const [reach] = await q<{ classes: number; schools: number; orgs: number; activities: number }>(
+    `SELECT (SELECT count(*)::int FROM classes) AS classes, (SELECT count(DISTINCT school)::int FROM classes WHERE school <> '') AS schools,
+            (SELECT count(DISTINCT organization)::int FROM users) AS orgs, (SELECT count(*)::int FROM progress WHERE status = 'completed') AS activities`
+  );
+  const schoolNames = (await q<{ school: string }>("SELECT DISTINCT school FROM classes WHERE school <> '' ORDER BY school LIMIT 6")).map((r) => r.school);
 
   const steps = [
     { icon: Link2, title: t("landing.step1t"), body: t("landing.step1d") },
@@ -96,6 +103,21 @@ export default async function Home() {
             </Reveal>
           ))}
         </ol>
+      </section>
+
+      <section className="mt-24" aria-label="Reach">
+        <Reveal>
+          <ImpactGlobe
+            languages={LOCALES.map((l) => l.label)}
+            schools={schoolNames}
+            stats={[
+              { label: "students", value: students },
+              { label: "classes", value: reach.classes },
+              { label: "schools", value: reach.schools },
+              { label: "activities completed", value: reach.activities },
+            ]}
+          />
+        </Reveal>
       </section>
 
       <Reveal>

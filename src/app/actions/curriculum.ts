@@ -158,3 +158,24 @@ export async function deleteModule(moduleId: string): Promise<Result> {
   revalidatePath("/curriculum");
   return { ok: true };
 }
+
+/** Fork & remix: copy a module (all activities, answer keys and tests) into a new draft to adapt. */
+export async function duplicateModule(moduleId: string): Promise<Result> {
+  const u = await editor();
+  if (!Uuid.safeParse(moduleId).success) return { ok: false, error: "Bad module" };
+  const mod = await one("SELECT course_id, title, summary, concepts FROM modules WHERE id = $1", [moduleId]);
+  if (!mod) return { ok: false, error: "Not found" };
+  const acts = await q(
+    "SELECT l.title AS lesson, a.kind, a.title, a.concept, a.content FROM lessons l JOIN activities a ON a.lesson_id = l.id WHERE l.module_id = $1 ORDER BY l.position, a.position",
+    [moduleId]
+  );
+  const id = await insertModule(mod.course_id, {
+    title: `${mod.title} (remix)`.slice(0, 100),
+    summary: mod.summary,
+    concepts: mod.concepts,
+    activities: acts.map((a) => ({ lesson: a.lesson, kind: a.kind, title: a.title, concept: a.concept, content: a.content })),
+  });
+  await audit(u.email, "module_duplicate", `${moduleId} → ${id}`);
+  revalidatePath("/curriculum");
+  return { ok: true, id };
+}
