@@ -147,9 +147,13 @@ export default async function Home() {
       </section>
 
       <Reveal>
-        <section className="card mt-16 flex flex-col items-start gap-4 p-6 sm:flex-row sm:items-center">
-          <ShieldCheck className="h-8 w-8 shrink-0 text-good" aria-hidden />
-          <p className="font-medium">{t("landing.privacy")}</p>
+        <section aria-labelledby="privacy" className="relative mt-20 overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-leaf/50 via-surface to-surface px-6 py-14 text-center sm:px-12 sm:py-20">
+          <span aria-hidden className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-leaf text-leaf-ink shadow-[0_12px_30px_-12px_rgb(var(--brand)/.6)]">
+            <ShieldCheck className="h-9 w-9" />
+          </span>
+          <h2 id="privacy" className="h-display mx-auto mt-6 max-w-4xl text-balance text-4xl font-black leading-[1.05] tracking-tight sm:text-6xl">
+            <SplitWords whenVisible text={t("landing.privacy")} className="text-shimmer bg-gradient-to-r from-ink via-brand to-ink bg-clip-text text-transparent" />
+          </h2>
         </section>
       </Reveal>
 
@@ -169,11 +173,6 @@ export default async function Home() {
         </p>
       </section>
       )}
-      <p className="mt-10 text-xs text-muted">
-        Crowd animation adapted from <a className="underline" href="https://skiper-ui.com" rel="noreferrer">Skiper UI</a> · Open Peeps illustrations by{" "}
-        <a className="underline" href="https://www.openpeeps.com" rel="noreferrer">Pablo Stanley</a> · Team badges by{" "}
-        <a className="underline" href="https://21st.dev/@dhxwhy" rel="noreferrer">@dhxwhy</a> · World map: Natural Earth · Coding in Color logo from the organisation&apos;s hackathon brief
-      </p>
     </div>
   );
 }
