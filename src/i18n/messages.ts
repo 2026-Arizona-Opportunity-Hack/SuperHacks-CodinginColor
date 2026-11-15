@@ -202,6 +202,10 @@ export const en = {
   "offline.youreOffline": "You're offline",
   "offline.unsupportedShort": "Try on the live site",
   "offline.updateHint": "Saved for offline. Tap to update the saved copy.",
+  "offline.mode": "Offline mode",
+  "offline.on": "On",
+  "offline.off": "Off",
+  "offline.turnedOff": "Offline mode is off. Saved copies were removed from this device.",
   // common
   "common.save": "Save",
   "common.cancel": "Cancel",

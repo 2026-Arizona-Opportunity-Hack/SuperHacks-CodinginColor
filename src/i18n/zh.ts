@@ -191,6 +191,11 @@ export const zh: Dict = {
   "offline.unsupportedShort": "请在正式网站上使用",
   "offline.updateHint": "已保存离线副本，点击更新。",
 
+  "offline.mode": "离线模式",
+  "offline.on": "开",
+  "offline.off": "关",
+  "offline.turnedOff": "离线模式已关闭，已删除此设备上保存的副本。",
+
   "common.save": "保存",
   "common.cancel": "取消",
   "common.delete": "删除",

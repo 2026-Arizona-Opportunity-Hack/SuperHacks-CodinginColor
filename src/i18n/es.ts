@@ -191,6 +191,11 @@ export const es: Dict = {
   "offline.unsupportedShort": "Pruébalo en el sitio publicado",
   "offline.updateHint": "Guardado sin conexión. Toca para actualizar la copia.",
 
+  "offline.mode": "Modo sin conexión",
+  "offline.on": "Activado",
+  "offline.off": "Desactivado",
+  "offline.turnedOff": "Modo sin conexión desactivado. Se borraron las copias guardadas en este dispositivo.",
+
   "common.save": "Guardar",
   "common.cancel": "Cancelar",
   "common.delete": "Eliminar",

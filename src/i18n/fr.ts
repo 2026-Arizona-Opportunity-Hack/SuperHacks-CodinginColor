@@ -192,6 +192,11 @@ export const fr: Dict = {
   "offline.unsupportedShort": "Essayez sur le site en ligne",
   "offline.updateHint": "Enregistré hors ligne. Touchez pour mettre à jour la copie.",
 
+  "offline.mode": "Mode hors ligne",
+  "offline.on": "Activé",
+  "offline.off": "Désactivé",
+  "offline.turnedOff": "Mode hors ligne désactivé. Les copies enregistrées ont été supprimées de cet appareil.",
+
   "common.save": "Enregistrer",
   "common.cancel": "Annuler",
   "common.delete": "Supprimer",
