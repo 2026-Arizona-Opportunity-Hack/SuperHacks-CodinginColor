@@ -5,6 +5,8 @@ import { Reveal, HeroCode, CountUp } from "@/components/landing/Motion";
 import { q } from "@/lib/db";
 import { learningGain } from "@/lib/stats";
 import { ImpactGlobe } from "@/components/landing/ImpactGlobe";
+import { CrowdCanvas } from "@/components/landing/CrowdCanvas";
+import { TeamSection } from "@/components/landing/TeamSection";
 import { LOCALES } from "@/i18n/config";
 
 export default async function Home() {
@@ -120,12 +122,26 @@ export default async function Home() {
         </Reveal>
       </section>
 
+      {/* Walking crowd: every student, any background. Full-bleed band; decorative only. */}
+      <section aria-labelledby="crowd" className="relative left-1/2 mt-20 h-[360px] w-screen -translate-x-1/2 overflow-hidden sm:h-[400px]">
+        <div className="relative z-10 mx-auto max-w-2xl px-4 text-center">
+          <h2 id="crowd" className="h-display text-3xl sm:text-4xl">{t("landing.crowdTitle")}</h2>
+          <p className="mt-2 text-muted">{t("landing.crowdBody")}</p>
+        </div>
+        <CrowdCanvas exclude={[17, 72, 92, 100]} scale={0.55} className="absolute inset-x-0 bottom-0 h-[260px] w-full sm:h-[300px]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-bg to-transparent" aria-hidden />
+      </section>
+
       <Reveal>
         <section className="card mt-16 flex flex-col items-start gap-4 p-6 sm:flex-row sm:items-center">
           <ShieldCheck className="h-8 w-8 shrink-0 text-good" aria-hidden />
           <p className="font-medium">{t("landing.privacy")}</p>
         </section>
       </Reveal>
+
+      <div className="relative left-1/2 mt-20 w-screen -translate-x-1/2">
+        <TeamSection />
+      </div>
 
       {process.env.SHOW_DEMO_ACCOUNTS !== "false" && (
       <section className="mt-10 text-sm text-muted" aria-labelledby="demo">
@@ -139,6 +155,11 @@ export default async function Home() {
         </p>
       </section>
       )}
+      <p className="mt-10 text-xs text-muted">
+        Crowd animation adapted from <a className="underline" href="https://skiper-ui.com" rel="noreferrer">Skiper UI</a> · Open Peeps illustrations by{" "}
+        <a className="underline" href="https://www.openpeeps.com" rel="noreferrer">Pablo Stanley</a> · Team badges by{" "}
+        <a className="underline" href="https://21st.dev/@dhxwhy" rel="noreferrer">@dhxwhy</a> · World map: Natural Earth
+      </p>
     </div>
   );
 }

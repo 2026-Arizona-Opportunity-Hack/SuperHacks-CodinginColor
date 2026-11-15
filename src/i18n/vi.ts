@@ -153,6 +153,15 @@ export const vi: Dict = {
   "family.workingOn": "Đang học: {module}",
   "family.privacy": "Do học sinh chia sẻ. Chỉ hiển thị tiến độ, không bao giờ hiển thị đáp án, bạn cùng lớp hay tin nhắn.",
 
+  "landing.crowdTitle": "Mỗi học sinh bước vào lớp.",
+  "landing.crowdBody": "Mọi xuất thân, mọi ngôn ngữ, mọi thiết bị. CIC Learn đồng hành cùng từng em từ chính nơi các em bắt đầu.",
+  "landing.teamEyebrow": "SuperHacks · Opportunity Hack 2026",
+  "landing.teamHeading": "Gặp gỡ đội ngũ",
+  "landing.teamCaption": "Rê chuột, kéo hoặc bấm vào thẻ để lật.",
+  "team.flip": "Bấm hoặc nhấn Enter để lật thẻ",
+  "team.back": "Bấm lần nữa hoặc nhấn Esc để lật lại",
+  "team.show": "Hiện",
+
   "common.save": "Lưu",
   "common.cancel": "Hủy",
   "common.delete": "Xóa",

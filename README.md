@@ -177,6 +177,13 @@ Start recording your demo video by **Sun Nov 15, 12:00 PM MST** — hacking ends
 
 Judges score **Scope, Documentation, Polish and Security**, plus a separate **Accessibility** prize: [ohack.dev/hackathon-judging-criteria](https://www.ohack.dev/hackathon-judging-criteria).
 
+## Credits
+
+- **Team badges**: [Team Lanyard Rail](https://21st.dev/@dhxwhy/components/team-lanyard-rail) by @dhxwhy (21st.dev), adapted to our theme tokens.
+- **Walking crowd**: adapted from *Skiper 39 · Canvas Crowd* by [Skiper UI](https://skiper-ui.com) (@gurvinder-singh02); free licence with attribution. Illustrations: [Open Peeps](https://www.openpeeps.com) by Pablo Stanley (CC0). Sprites showing a knife are excluded.
+- **World map**: [Natural Earth](https://www.naturalearthdata.com) via [world-atlas](https://github.com/topojson/world-atlas), rendered with [d3-geo](https://github.com/d3/d3-geo).
+- **Python in the browser**: [Pyodide](https://pyodide.org). **Animation**: [GSAP](https://gsap.com), [Framer Motion](https://www.framer.com/motion/).
+
 ## After the hackathon
 
 Winning teams finish the project with the nonprofit: the [Definition of Done](https://www.ohack.dev/about/completion) (deployed, nonprofit sign-off, docs, open source) is tracked on the team page. Our plan for that is in [HANDOFF.md](HANDOFF.md).

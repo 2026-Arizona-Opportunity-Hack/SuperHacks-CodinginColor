@@ -153,6 +153,15 @@ export const pt: Dict = {
   "family.workingOn": "Trabalhando agora em: {module}",
   "family.privacy": "Compartilhado pelo aluno. Mostra apenas o progresso, nunca respostas, colegas ou mensagens.",
 
+  "landing.crowdTitle": "Cada aluno que chega.",
+  "landing.crowdBody": "Qualquer origem, idioma ou aparelho. A CIC Learn encontra cada um onde ele está.",
+  "landing.teamEyebrow": "SuperHacks · Opportunity Hack 2026",
+  "landing.teamHeading": "Conheça a equipe",
+  "landing.teamCaption": "Passe o mouse, arraste ou clique em um crachá para virá-lo.",
+  "team.flip": "Clique ou pressione Enter para virar o crachá",
+  "team.back": "Clique de novo ou pressione Esc para desvirar",
+  "team.show": "Mostrar",
+
   "common.save": "Salvar",
   "common.cancel": "Cancelar",
   "common.delete": "Excluir",
