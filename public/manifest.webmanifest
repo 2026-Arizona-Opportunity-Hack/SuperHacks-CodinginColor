@@ -4,7 +4,7 @@
   "description": "Coding in Color's curriculum and student progress platform.",
   "start_url": "/learn",
   "display": "standalone",
-  "background_color": "#faf9ff",
-  "theme_color": "#6d28d9",
+  "background_color": "#F9FDF5",
+  "theme_color": "#BAED91",
   "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
 }

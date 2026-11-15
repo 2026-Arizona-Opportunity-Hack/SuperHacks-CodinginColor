@@ -17,6 +17,8 @@ export default {
         muted: v("muted"),
         line: v("line"),
         brand: v("brand"),
+        leaf: v("leaf"),
+        "leaf-ink": v("leaf-ink"),
         "brand-ink": v("brand-ink"),
         accent: v("accent"),
         good: v("good"),

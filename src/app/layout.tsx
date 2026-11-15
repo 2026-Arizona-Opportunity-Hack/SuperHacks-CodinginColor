@@ -7,6 +7,8 @@ import { dirOf } from "@/i18n/config";
 import { I18nProvider } from "@/i18n/client";
 import { Header } from "@/components/Header";
 import { OfflineSupport } from "@/components/OfflineSupport";
+import { MotionProvider } from "@/components/motion/MotionProvider";
+import { ScrollProgress } from "@/components/motion/Effects";
 
 // Hindi and Chinese fall back to the device's system fonts (Noto / PingFang), which cover those scripts well.
 const sans = Plus_Jakarta_Sans({ subsets: ["latin", "latin-ext", "vietnamese"], variable: "--font-sans", display: "swap" });
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
   icons: { icon: "/icon.svg" },
   manifest: "/manifest.webmanifest",
 };
-export const viewport: Viewport = { themeColor: "#6d28d9", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#BAED91", width: "device-width", initialScale: 1 };
 
 // Applies saved reading-mode preferences before first paint (no flash). Values are whitelisted.
 const prefsScript = `try{var p=JSON.parse(localStorage.getItem('cic_prefs')||'{}'),d=document.documentElement;
@@ -37,6 +39,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:start-3 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-brand-ink">
           {t("nav.skip")}
         </a>
+        <MotionProvider>
+        <ScrollProgress />
         <I18nProvider locale={locale}>
           <Header />
           <main id="main" className="mx-auto w-full max-w-6xl px-4 pb-16 pt-6 sm:px-6">
@@ -44,6 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </main>
           <OfflineSupport />
         </I18nProvider>
+        </MotionProvider>
       </body>
     </html>
   );

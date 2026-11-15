@@ -146,7 +146,7 @@ export function Player({
   };
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
+    <div className="grid gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
       <aside className="lg:sticky lg:top-20 lg:self-start">
         <Link href="/learn" className="inline-flex items-center gap-1 text-sm text-muted hover:text-ink">
           <ArrowLeft className="h-4 w-4 rtl:rotate-180" aria-hidden /> {t("player.backToJourney")}

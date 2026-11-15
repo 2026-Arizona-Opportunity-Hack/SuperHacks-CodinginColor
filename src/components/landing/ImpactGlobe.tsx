@@ -1,10 +1,11 @@
 "use client";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useCalm } from "@/components/motion/MotionProvider";
 import { WorldGlobe } from "./WorldGlobe";
 
 /** Animated globe for the landing page. Every number comes from the database; nothing is invented. */
 export function ImpactGlobe({ stats, schools, languages }: { stats: { label: string; value: number }[]; schools: string[]; languages: { code: string; label: string }[] }) {
-  const reduce = useReducedMotion();
+  const reduce = useCalm();
   return (
     <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr]">
       <div className="relative mx-auto aspect-square w-full max-w-[420px]">

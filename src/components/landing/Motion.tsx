@@ -1,10 +1,11 @@
 "use client";
-import { animate, motion, useInView, useReducedMotion } from "framer-motion";
+import { animate, motion, useInView } from "framer-motion";
+import { useCalm } from "@/components/motion/MotionProvider";
 import { useEffect, useRef, useState } from "react";
 import { CheckCircle2, Lightbulb, XCircle } from "lucide-react";
 
 export function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const reduce = useReducedMotion();
+  const reduce = useCalm();
   return (
     <motion.div
       initial={reduce ? false : { opacity: 0, y: 18 }}
@@ -37,7 +38,7 @@ const FRAMES = [
 ] as const;
 
 export function HeroCode({ students }: { students: number }) {
-  const reduce = useReducedMotion();
+  const reduce = useCalm();
   const [i, setI] = useState(reduce ? 2 : 0);
   useEffect(() => {
     if (reduce) return;
