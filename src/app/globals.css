@@ -16,6 +16,9 @@
   --good: 21 128 61;
   --warn: 180 83 9;
   --bad: 190 18 60;
+  /* Chart series (validated for colour-blind separation): pre = orange, post = violet */
+  --chart-pre: #e8833a;
+  --chart-post: #6d28d9;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
@@ -32,6 +35,8 @@
     --good: 74 222 128;
     --warn: 251 191 36;
     --bad: 251 113 133;
+    --chart-pre: #d9732a;
+    --chart-post: #9b72f2;
     color-scheme: dark;
   }
 }
@@ -48,6 +53,8 @@
   --good: 74 222 128;
   --warn: 251 191 36;
   --bad: 251 113 133;
+  --chart-pre: #d9732a;
+  --chart-post: #9b72f2;
   color-scheme: dark;
 }
 
