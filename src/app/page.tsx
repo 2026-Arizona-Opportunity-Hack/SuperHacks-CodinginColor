@@ -135,13 +135,15 @@ export default async function Home() {
       </section>
 
       {/* Walking crowd: every student, any background. Full-bleed band; decorative only. */}
-      <section aria-labelledby="crowd" className="relative left-1/2 mt-20 h-[360px] w-screen -translate-x-1/2 overflow-hidden sm:h-[400px]">
-        <div className="relative z-10 mx-auto max-w-2xl px-4 text-center">
-          <h2 id="crowd" className="h-display text-3xl sm:text-4xl">{t("landing.crowdTitle")}</h2>
-          <p className="mt-2 text-muted">{t("landing.crowdBody")}</p>
+      <section aria-labelledby="crowd" className="relative left-1/2 mt-24 h-[560px] w-screen -translate-x-1/2 overflow-hidden sm:h-[680px]">
+        <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
+          <h2 id="crowd" className="h-display text-balance text-5xl font-black leading-[1.02] tracking-tight sm:text-7xl">
+            <SplitWords whenVisible text={t("landing.crowdTitle")} className="text-shimmer bg-gradient-to-r from-ink via-brand to-ink bg-clip-text text-transparent" />
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg font-medium text-muted sm:text-xl">{t("landing.crowdBody")}</p>
         </div>
-        <CrowdCanvas exclude={[17, 72, 92, 100]} scale={0.55} className="absolute inset-x-0 bottom-0 h-[260px] w-full sm:h-[300px]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-bg to-transparent" aria-hidden />
+        <CrowdCanvas exclude={[17, 72, 92, 100]} scale={0.85} className="absolute inset-x-0 bottom-0 h-[360px] w-full sm:h-[460px]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-bg to-transparent" aria-hidden />
       </section>
 
       <Reveal>

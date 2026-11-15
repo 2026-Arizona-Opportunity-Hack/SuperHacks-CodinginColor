@@ -11,7 +11,8 @@ export function ScrollProgress() {
 }
 
 /** Reveals a line of text word by word. Screen readers get the plain sentence. */
-export function SplitWords({ text, className = "", delay = 0 }: { text: string; className?: string; delay?: number }) {
+/** `whenVisible` waits until the text scrolls into view instead of animating on page load. */
+export function SplitWords({ text, className = "", delay = 0, whenVisible = false }: { text: string; className?: string; delay?: number; whenVisible?: boolean }) {
   const calm = useCalm();
   const words = text.split(" ");
   return (
@@ -24,7 +25,9 @@ export function SplitWords({ text, className = "", delay = 0 }: { text: string; 
               <motion.span
                 className="inline-block"
                 initial={calm ? false : { y: "110%", rotate: 4, opacity: 0 }}
-                animate={{ y: "0%", rotate: 0, opacity: 1 }}
+                {...(whenVisible
+                  ? { whileInView: { y: "0%", rotate: 0, opacity: 1 }, viewport: { once: true, margin: "-60px" } }
+                  : { animate: { y: "0%", rotate: 0, opacity: 1 } })}
                 transition={{ duration: 0.7, delay: delay + i * 0.08, ease: [0.2, 0.7, 0.2, 1] }}
               >
                 {w}
