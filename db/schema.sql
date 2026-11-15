@@ -177,3 +177,11 @@ CREATE TABLE IF NOT EXISTS proofs (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS proofs_cert_once ON proofs (student_id) WHERE kind = 'certificate';
+
+-- Family view: a student opts in and shares a private link with a parent/guardian. Revocable.
+CREATE TABLE IF NOT EXISTS family_links (
+  token_hash text PRIMARY KEY,
+  student_id uuid NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  revoked_at timestamptz
+);
