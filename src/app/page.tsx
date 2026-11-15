@@ -127,6 +127,7 @@ export default async function Home() {
         </section>
       </Reveal>
 
+      {process.env.SHOW_DEMO_ACCOUNTS !== "false" && (
       <section className="mt-10 text-sm text-muted" aria-labelledby="demo">
         <h2 id="demo" className="font-semibold text-ink">
           {t("landing.demoAccounts")}
@@ -137,6 +138,7 @@ export default async function Home() {
           <code className="font-mono">reviewer@district.org</code> (password in the README)
         </p>
       </section>
+      )}
     </div>
   );
 }

@@ -1,0 +1,77 @@
+openapi: 3.1.0
+info:
+  title: CIC Learn Read API
+  version: "1.0"
+  description: Aggregated program-health data for Coding in Color's org dashboard. Never returns student names.
+servers:
+  - url: http://localhost:3000
+security:
+  - bearer: []
+paths:
+  /api/v1/stats:
+    get:
+      summary: Cohort completion and learning gain
+      parameters:
+        - name: cohort
+          in: query
+          required: false
+          schema: { type: string, maxLength: 80 }
+      responses:
+        "200":
+          description: Aggregated statistics
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Stats" }
+        "401": { description: Missing or invalid API key }
+        "429": { description: Rate limit exceeded (60/min/key) }
+components:
+  securitySchemes:
+    bearer: { type: http, scheme: bearer, description: "cic_live_… key created in Admin → Read API keys" }
+  schemas:
+    Gain:
+      type: object
+      properties:
+        pre: { type: number }
+        post: { type: number }
+        gain: { type: number }
+        n: { type: integer, description: Student-module pairs with both tests }
+    LabeledGain:
+      allOf:
+        - $ref: "#/components/schemas/Gain"
+        - type: object
+          properties: { label: { type: string } }
+    Stats:
+      type: object
+      properties:
+        generated_at: { type: string, format: date-time }
+        definition: { type: string }
+        totals:
+          type: object
+          properties:
+            students: { type: integer }
+            active_7d: { type: integer }
+            activities_completed: { type: integer }
+            hints_given: { type: integer }
+        learning_gain:
+          type: object
+          properties:
+            overall: { oneOf: [{ $ref: "#/components/schemas/Gain" }, { type: "null" }] }
+            by_cohort: { type: array, items: { $ref: "#/components/schemas/LabeledGain" } }
+            by_concept: { type: array, items: { $ref: "#/components/schemas/LabeledGain" } }
+            by_module: { type: array, items: { $ref: "#/components/schemas/LabeledGain" } }
+        classes:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string, format: uuid }
+              name: { type: string }
+              school: { type: string }
+              cohort: { type: string }
+              instructor: { type: string }
+              organization: { type: string }
+              students: { type: integer }
+              active_7d: { type: integer }
+              modules_assigned: { type: integer }
+              completion_pct: { type: integer }
+              learning_gain: { oneOf: [{ $ref: "#/components/schemas/Gain" }, { type: "null" }] }
