@@ -1,7 +1,7 @@
 import { test, before } from "node:test";
 import assert from "node:assert/strict";
 import { db, q, one } from "@/lib/db";
-import { journey, moduleActivities } from "@/lib/progress";
+import { journey, moduleActivities, saveProgress } from "@/lib/progress";
 import { classRoster, conceptHeat, learningGain } from "@/lib/stats";
 import type { Student } from "@/lib/auth";
 
@@ -48,6 +48,20 @@ test("struggle signals surface the class's hard concept", async () => {
 test("learning gain is positive for the seeded cohorts", async () => {
   const [g] = await learningGain();
   assert.ok(g.gain > 0 && g.n > 10);
+});
+
+test("a completion counts once: repeated and simultaneous submits don't re-award XP", async () => {
+  const cls = await one("SELECT id FROM classes WHERE join_code = 'MARY26'");
+  const [s] = await q("INSERT INTO students (class_id, display_name, resume_code) VALUES ($1, 'Xp', 'XPXP01') RETURNING id", [cls!.id]);
+  const act = await one("SELECT a.id FROM activities a JOIN lessons l ON l.id = a.lesson_id WHERE a.kind = 'code' LIMIT 1");
+  const save = (completed: boolean) => saveProgress(s.id, act!.id, { completed, score: completed ? 100 : null, keepBest: completed ? 100 : null, answer: { code: "x" }, seconds: 5 });
+  assert.equal((await save(false)).newlyCompleted, false); // a failed attempt
+  const both = await Promise.all([save(true), save(true)]); // double-click / retry storm
+  assert.equal(both.filter((r) => r.newlyCompleted).length, 1);
+  assert.equal((await save(true)).newlyCompleted, false); // later resubmits
+  const row = await one("SELECT status, attempts FROM progress WHERE student_id = $1 AND activity_id = $2", [s.id, act!.id]);
+  assert.equal(row!.status, "completed");
+  assert.equal(row!.attempts, 4);
 });
 
 test("sign-up can't grant curriculum edit rights; only the seeded CIC editor has them", async () => {
