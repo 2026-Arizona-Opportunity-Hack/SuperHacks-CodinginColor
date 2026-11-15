@@ -1,6 +1,6 @@
 # CIC Learn · SuperHacks for Coding in Color
 
-**One link. Every student unstuck.** A code.org-style curriculum and student-progress platform for
+**One link. Every student unstuck.** · 🔗 **Live: https://cic-learn-pink.vercel.app** A code.org-style curriculum and student-progress platform for
 [Coding in Color](https://codingincolor.net): a teacher shares a class code, the platform teaches CIC's
 curriculum, grades real Python in the browser, gives Socratic hints that never hand over the answer,
 shows exactly who is stuck on what, and proves to funders how much students learned.
@@ -149,7 +149,7 @@ tests/                        node:test suites (npm test)
 
 ## Links
 
-- Live demo: _coming with the deploy_
+- Live demo: **https://cic-learn-pink.vercel.app** (class code `MARY26`; staff logins below)
 - Demo video:
 - Design / docs: [docs/](docs)
 
