@@ -79,3 +79,16 @@ test("learning gain only counts students with both tests", () => {
   assert.equal(g.n, 2);
   assert.equal(g.gain, 30);
 });
+
+test("every language translates every UI string and keeps {placeholders}", async () => {
+  const { dictionaries, en } = await import("@/i18n/messages");
+  const { LOCALES } = await import("@/i18n/config");
+  for (const { code } of LOCALES) {
+    const dict = dictionaries[code];
+    for (const [key, value] of Object.entries(en)) {
+      const t = dict[key as keyof typeof en];
+      assert.ok(t, `${code} is missing ${key}`);
+      for (const ph of value.match(/\{\w+\}/g) ?? []) assert.ok(t!.includes(ph), `${code} ${key} lost ${ph}`);
+    }
+  }
+});

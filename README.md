@@ -52,7 +52,7 @@ spreadsheets. CIC Learn replaces that with a link a teacher can share on Monday.
 - **Verifiable certificates and funder reports.** Only a SHA-256 fingerprint is recorded on Solana. Names and scores never go on-chain. Anyone can check `/verify/<id>`.
 - **Funder report**: a printable one-pager with learning gain by concept and class.
 - **Live class mode, raise hand, pair programming, XP/streaks/badges** (leaderboard opt-out), **consent-gated family view**, **gradebook CSV**, **offline mode** for slow school Wi-Fi.
-- **English, Spanish and Arabic** (right-to-left), plus a reading-mode menu: dyslexia-friendly font, high contrast, reduced motion, lite mode, dark mode.
+- **8 languages**: English, Español, العربية (right-to-left), Français, Português, हिन्दी, 中文, Tiếng Việt. AI hints, voice input and read-aloud follow the student's language. Plus a reading-mode menu: dyslexia-friendly font, high contrast, reduced motion, lite mode, dark mode.
 
 ## Screenshots
 
@@ -135,7 +135,7 @@ src/app/                      pages and API routes (Next.js App Router)
   api/                        activity submit, hints, pair programming, read API (v1/stats)
 src/lib/                      server logic: db, auth, grading, progress, stats, tutor, proofs
 src/components/               UI: activity views, code editor, charts, header, accessibility menu
-src/i18n/                     English / Spanish / Arabic dictionaries
+src/i18n/                     UI dictionaries for 8 languages (add one: copy es.ts, translate, register in config.ts)
 public/pyodide-worker.js      runs student Python in the browser
 public/sw.js                  offline support
 tests/                        node:test suites (npm test)

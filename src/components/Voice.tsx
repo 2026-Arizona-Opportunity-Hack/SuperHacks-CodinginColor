@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Mic, MicOff } from "lucide-react";
 
-const SPEECH_LANG: Record<string, string> = { en: "en-US", es: "es-US", ar: "ar-SA" };
+const SPEECH_LANG: Record<string, string> = { en: "en-US", es: "es-US", ar: "ar-SA", fr: "fr-FR", pt: "pt-BR", hi: "hi-IN", zh: "zh-CN", vi: "vi-VN" };
 
 /** Reads text aloud in the student's language (built into the browser; nothing leaves the device). */
 export function speak(text: string, locale: string) {

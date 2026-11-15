@@ -3,23 +3,28 @@ import { motion, useReducedMotion } from "framer-motion";
 import { WorldGlobe } from "./WorldGlobe";
 
 /** Animated globe for the landing page. Every number comes from the database; nothing is invented. */
-export function ImpactGlobe({ stats, schools, languages }: { stats: { label: string; value: number }[]; schools: string[]; languages: string[] }) {
+export function ImpactGlobe({ stats, schools, languages }: { stats: { label: string; value: number }[]; schools: string[]; languages: { code: string; label: string }[] }) {
   const reduce = useReducedMotion();
   return (
     <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr]">
       <div className="relative mx-auto aspect-square w-full max-w-[420px]">
         <WorldGlobe label="Rotating world map with Phoenix, Arizona highlighted" />
-        {languages.map((l, i) => (
-          <motion.span
-            key={l}
-            className="chip absolute bg-surface text-ink shadow-card"
-            style={{ top: `${18 + i * 26}%`, [i % 2 ? "left" : "right"]: "-4%" } as React.CSSProperties}
-            animate={reduce ? undefined : { y: [0, -6, 0] }}
-            transition={{ duration: 3 + i, repeat: Infinity, ease: "easeInOut" }}
-          >
-            {l}
-          </motion.span>
-        ))}
+        {languages.map(({ code, label: l }, i) => {
+          // Spread the language chips evenly in a ring around the globe.
+          const a = (i / languages.length) * 2 * Math.PI - Math.PI / 2;
+          return (
+            <motion.span
+              key={l}
+              className="chip absolute bg-surface text-ink shadow-card"
+              style={{ left: `${50 + 49 * Math.cos(a)}%`, top: `${50 + 49 * Math.sin(a)}%`, translate: "-50% -50%" }}
+              animate={reduce ? undefined : { y: [0, -5, 0] }}
+              transition={{ duration: 3 + (i % 3), repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
+              lang={code}
+            >
+              {l}
+            </motion.span>
+          );
+        })}
       </div>
       <div>
         <h2 className="h-display text-3xl">Built in Phoenix. Ready for any classroom.</h2>

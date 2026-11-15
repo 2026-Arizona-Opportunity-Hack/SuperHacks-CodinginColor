@@ -1,6 +1,11 @@
 import type { Locale } from "./config";
 import { es } from "./es";
 import { ar } from "./ar";
+import { fr } from "./fr";
+import { pt } from "./pt";
+import { hi } from "./hi";
+import { zh } from "./zh";
+import { vi } from "./vi";
 
 /** English is the source of truth; other languages fall back to English for any missing key. */
 export const en = {
@@ -176,7 +181,7 @@ export const en = {
 export type Key = keyof typeof en;
 export type Dict = Partial<Record<Key, string>>;
 
-export const dictionaries: Record<Locale, Dict> = { en, es, ar };
+export const dictionaries: Record<Locale, Dict> = { en, es, ar, fr, pt, hi, zh, vi };
 
 export function translate(locale: Locale, key: Key, vars?: Record<string, string | number>): string {
   let s: string = dictionaries[locale]?.[key] ?? en[key] ?? key;
