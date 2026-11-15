@@ -153,6 +153,15 @@ export const hi: Dict = {
   "family.workingOn": "अभी इस पर काम चल रहा है: {module}",
   "family.privacy": "छात्र द्वारा साझा किया गया। सिर्फ़ प्रगति दिखती है, जवाब, सहपाठी या संदेश कभी नहीं।",
 
+  "landing.crowdTitle": "हर वह छात्र जो कक्षा में आता है।",
+  "landing.crowdBody": "कोई भी पृष्ठभूमि, कोई भी भाषा, कोई भी डिवाइस। CIC Learn हर छात्र से वहीं मिलता है जहाँ वह है।",
+  "landing.teamEyebrow": "SuperHacks · Opportunity Hack 2026",
+  "landing.teamHeading": "टीम से मिलें",
+  "landing.teamCaption": "बैज पलटने के लिए उस पर होवर करें, खींचें या क्लिक करें।",
+  "team.flip": "बैज पलटने के लिए क्लिक करें या Enter दबाएँ",
+  "team.back": "वापस पलटने के लिए फिर क्लिक करें या Esc दबाएँ",
+  "team.show": "दिखाएँ",
+
   "common.save": "सेव करें",
   "common.cancel": "रद्द करें",
   "common.delete": "हटाएँ",

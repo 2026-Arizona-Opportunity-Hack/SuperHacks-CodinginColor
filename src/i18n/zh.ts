@@ -152,6 +152,15 @@ export const zh: Dict = {
   "family.workingOn": "正在学习：{module}",
   "family.privacy": "由学生分享。只显示学习进度，不会显示答案、同学或消息。",
 
+  "landing.crowdTitle": "每一位走进教室的学生。",
+  "landing.crowdBody": "无论背景、语言还是设备，CIC Learn 都从每个学生的起点出发。",
+  "landing.teamEyebrow": "SuperHacks · Opportunity Hack 2026",
+  "landing.teamHeading": "认识团队",
+  "landing.teamCaption": "悬停、拖动或点击胸牌即可翻转。",
+  "team.flip": "点击或按 Enter 翻转胸牌",
+  "team.back": "再次点击或按 Esc 翻回",
+  "team.show": "显示",
+
   "common.save": "保存",
   "common.cancel": "取消",
   "common.delete": "删除",

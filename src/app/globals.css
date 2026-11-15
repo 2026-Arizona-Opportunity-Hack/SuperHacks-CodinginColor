@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* shadcn-style CSS variables read by third-party components (e.g. the team lanyards), derived from our tokens. */
+:root {
+  --chart-1: 109 40 217;
+  --chart-2: 234 88 12;
+  --chart-3: 13 148 136;
+  --chart-4: 219 39 119;
+  --chart-5: 2 132 199;
+  --color-background: rgb(var(--bg));
+  --color-foreground: rgb(var(--ink));
+  --color-card: rgb(var(--surface));
+  --color-muted-foreground: rgb(var(--muted));
+}
+
 /* ── Design tokens (RGB triplets so Tailwind can apply opacity) ── */
 :root {
   --bg: 250 249 255;
@@ -94,9 +107,14 @@
   }
 }
 
+html {
+  overflow-x: clip;
+}
+
 body {
   background: rgb(var(--bg));
   color: rgb(var(--ink));
+  overflow-x: clip; /* full-bleed landing bands must never cause sideways scrolling */
   -webkit-font-smoothing: antialiased;
 }
 

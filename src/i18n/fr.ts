@@ -153,6 +153,15 @@ export const fr: Dict = {
   "family.workingOn": "En ce moment : {module}",
   "family.privacy": "Partagé par l'élève. Seule la progression est visible, jamais les réponses, les camarades ou les messages.",
 
+  "landing.crowdTitle": "Chaque élève qui franchit la porte.",
+  "landing.crowdBody": "Toutes les origines, toutes les langues, tous les appareils. CIC Learn rejoint chacun là où il en est.",
+  "landing.teamEyebrow": "SuperHacks · Opportunity Hack 2026",
+  "landing.teamHeading": "L'équipe",
+  "landing.teamCaption": "Survolez, faites glisser ou cliquez sur un badge pour le retourner.",
+  "team.flip": "Cliquez ou appuyez sur Entrée pour retourner le badge",
+  "team.back": "Cliquez à nouveau ou appuyez sur Échap pour le remettre",
+  "team.show": "Afficher",
+
   "common.save": "Enregistrer",
   "common.cancel": "Annuler",
   "common.delete": "Supprimer",
