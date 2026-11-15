@@ -147,7 +147,7 @@ export default async function Home() {
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg font-medium text-muted sm:text-xl">{t("landing.crowdBody")}</p>
         </div>
-        <div className="mx-auto mt-10 max-w-2xl px-2 pb-10 text-start">
+        <div className="mx-auto mt-10 max-w-5xl px-2 pb-10 text-start">
           <HeroCode students={students} />
         </div>
       </section>
