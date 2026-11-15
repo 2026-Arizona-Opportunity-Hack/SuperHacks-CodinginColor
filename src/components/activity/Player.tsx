@@ -7,6 +7,7 @@ import confetti from "canvas-confetti";
 import { ArrowLeft, Check, Hand, Lock } from "lucide-react";
 import { useT } from "@/i18n/client";
 import { raiseHand } from "@/app/actions/student";
+import { queueSubmission } from "@/lib/client/offline";
 import { QuizView } from "./QuizView";
 import { VideoView, SlidesView } from "./ContentViews";
 import { WorksheetView } from "./WorksheetView";
@@ -34,6 +35,8 @@ export type SubmitResponse = {
   moduleComplete: boolean;
   gain: number | null;
   alreadyDone?: boolean;
+  /** Saved offline; will be sent (and graded) when the device reconnects. */
+  queued?: boolean;
   error?: string;
 };
 
@@ -79,8 +82,20 @@ export function Player({
           body: JSON.stringify({ ...payload, seconds }),
         });
       } catch {
-        // Offline: drafts are already saved on this device; ask the student to resubmit when back online.
-        return { completed: false, score: null, nextActivityId: null, moduleComplete: false, gain: null, error: "You're offline. Your work is saved on this device: press Submit again when you're back online." };
+        // Offline: keep the work in the outbox (sent automatically when back online) and let the
+        // student carry on. The server re-checks order and grades quizzes when it arrives.
+        queueSubmission(current.id, { ...payload, seconds });
+        const idx = acts.findIndex((a) => a.id === current.id);
+        setActs((list) => {
+          let open = true;
+          return list.map((a) => {
+            const done = a.id === current.id ? true : a.completed;
+            const r = { ...a, completed: done, open };
+            if (!done) open = false;
+            return r;
+          });
+        });
+        return { completed: true, queued: true, score: null, nextActivityId: acts[idx + 1]?.id ?? null, moduleComplete: false, gain: null };
       }
       const data = (await res.json().catch(() => ({ error: "Something went wrong. Please try again." }))) as SubmitResponse;
       if (!res.ok) return { ...data, completed: false } as SubmitResponse;
@@ -108,7 +123,7 @@ export function Player({
       }
       return data;
     },
-    [current, router]
+    [current, router, acts]
   );
 
   const goNext = () => {
@@ -221,7 +236,7 @@ export function Player({
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10 }}
-            className="fixed bottom-6 end-6 z-50 rounded-full bg-brand px-5 py-3 font-bold text-brand-ink shadow-card"
+            className="fixed bottom-24 end-6 z-50 rounded-full bg-brand px-5 py-3 font-bold text-brand-ink shadow-card"
           >
             +{xpToast} XP ⚡
           </motion.div>

@@ -21,7 +21,7 @@ export function OfflineSupport() {
   if (!offline) return null;
   return (
     <div role="status" className="no-print fixed inset-x-0 bottom-0 z-50 flex items-center justify-center gap-2 bg-ink px-4 py-2 text-sm font-medium text-bg">
-      <WifiOff className="h-4 w-4" aria-hidden /> You&apos;re offline. Python still runs; your work is saved on this device.
+      <WifiOff className="h-4 w-4" aria-hidden /> You&apos;re offline. Python and saved lessons still work; your answers will sync when you&apos;re back online.
     </div>
   );
 }
