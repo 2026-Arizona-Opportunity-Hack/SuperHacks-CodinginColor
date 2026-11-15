@@ -147,7 +147,7 @@ export default async function Home() {
       </section>
 
       <Reveal>
-        <section aria-labelledby="privacy" className="relative mt-20 overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-leaf/50 via-surface to-surface px-6 py-14 text-center sm:px-12 sm:py-20">
+        <section aria-labelledby="privacy" className="relative mt-24 px-2 py-6 text-center sm:py-10">
           <span aria-hidden className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-leaf text-leaf-ink shadow-[0_12px_30px_-12px_rgb(var(--brand)/.6)]">
             <ShieldCheck className="h-9 w-9" />
           </span>
