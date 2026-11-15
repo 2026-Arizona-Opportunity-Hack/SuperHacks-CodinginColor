@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   if (!sameOrigin(req)) return jsonError(403, "Bad origin");
   const student = await currentStudent();
   if (!student) return jsonError(401, "Join a class first");
-  if (!rateLimit(`pair:${student.id}`, 120, 60_000)) return jsonError(429, "Too many requests");
+  if (!await rateLimit(`pair:${student.id}`, 120, 60_000)) return jsonError(429, "Too many requests");
   let body: z.infer<typeof Body>;
   try {
     body = Body.parse(await readJson(req, 30_000));

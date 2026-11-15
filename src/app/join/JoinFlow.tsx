@@ -6,6 +6,9 @@ import { ArrowRight, KeyRound, Loader2, UserPlus } from "lucide-react";
 import { useT } from "@/i18n/client";
 import { claimSeat, joinAsNew, lookupClass, resume, type JoinLookup, type JoinResult } from "@/app/actions/join";
 
+// Shown when the teacher has locked new joins; returning students use their resume code below.
+const CLOSED = "This class is closed to new students. Already joined? Use your resume code below, or ask your teacher.";
+
 export function JoinFlow({ initialCode }: { initialCode: string }) {
   const t = useT();
   const router = useRouter();
@@ -17,7 +20,7 @@ export function JoinFlow({ initialCode }: { initialCode: string }) {
   const [pending, start] = useTransition();
 
   const errorText = (e: string) =>
-    e === "claimed" ? t("join.claimed") : e === "not_found" ? t("join.notFound") : e === "rate_limited" ? t("login.tooMany") : t("common.error");
+    e === "claimed" ? t("join.claimed") : e === "not_found" ? t("join.notFound") : e === "rate_limited" ? t("login.tooMany") : e === "closed" ? CLOSED : t("common.error");
 
   const find = (c = code) =>
     start(async () => {
@@ -88,6 +91,8 @@ export function JoinFlow({ initialCode }: { initialCode: string }) {
             <div className="card p-6 sm:p-8">
               <p className="text-sm font-semibold text-brand">{cls.school}</p>
               <h1 className="h-display mt-1 text-2xl">{cls.className}</h1>
+              {!cls.joinOpen && <p role="status" className="mt-4 rounded-xl bg-warn/10 p-3 text-sm font-medium">{CLOSED}</p>}
+              {cls.joinOpen && <>
               <h2 className="mt-5 font-semibold">{t("join.pickName")}</h2>
               <p className="text-sm text-muted">{t("join.pickNameHelp")}</p>
               <ul className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -125,6 +130,7 @@ export function JoinFlow({ initialCode }: { initialCode: string }) {
                   <UserPlus className="h-4 w-4" aria-hidden /> {t("join.add")}
                 </button>
               </form>
+              </>}
             </div>
             <form
               className="card p-6"

@@ -11,7 +11,7 @@ import { q } from "@/lib/db";
 export async function GET(req: Request) {
   const key = await verifyApiKey(req.headers.get("authorization"));
   if (!key) return NextResponse.json({ error: "Missing or invalid API key" }, { status: 401, headers: { "WWW-Authenticate": "Bearer" } });
-  if (!rateLimit(`api:${key.id}`, 60, 60_000)) return NextResponse.json({ error: "Rate limit: 60 requests per minute" }, { status: 429 });
+  if (!await rateLimit(`api:${key.id}`, 60, 60_000)) return NextResponse.json({ error: "Rate limit: 60 requests per minute" }, { status: 429 });
 
   const url = new URL(req.url);
   const cohort = url.searchParams.get("cohort")?.slice(0, 80) || undefined;

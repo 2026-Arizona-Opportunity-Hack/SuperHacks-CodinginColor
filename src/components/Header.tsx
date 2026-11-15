@@ -14,6 +14,7 @@ export async function Header() {
   if (staff?.role === "instructor" || staff?.role === "admin") links.push({ href: "/teach", label: t("nav.teach") });
   if (staff?.role === "admin") links.push({ href: "/admin", label: t("nav.admin") });
   if (staff) links.push({ href: "/curriculum", label: t("nav.curriculum") });
+  if (staff) links.push({ href: "/account", label: "Security" });
   links.push({ href: "/play", label: t("nav.playground") });
 
   return (

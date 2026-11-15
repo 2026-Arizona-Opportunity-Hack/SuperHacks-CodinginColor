@@ -13,7 +13,7 @@ const Body = z.object({ code: z.string().max(20_000), error: z.string().max(2000
 export async function POST(req: Request) {
   if (!sameOrigin(req)) return jsonError(403, "Bad origin");
   const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
-  if (!rateLimit(`playhint:${ip}`, 6, 60_000)) return jsonError(429, "Take a minute to try the last hint first 🙂");
+  if (!await rateLimit(`playhint:${ip}`, 6, 60_000)) return jsonError(429, "Take a minute to try the last hint first 🙂");
   let body: z.infer<typeof Body>;
   try {
     body = Body.parse(await readJson(req));

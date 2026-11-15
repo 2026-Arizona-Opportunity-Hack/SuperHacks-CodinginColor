@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   if (!sameOrigin(req)) return jsonError(403, "Bad origin");
   const student = await currentStudent();
   if (!student) return jsonError(401, "Join a class first");
-  if (!rateLimit(`hint:${student.id}`, 8, 60_000)) return jsonError(429, "Take a minute to try the last hint first 🙂");
+  if (!await rateLimit(`hint:${student.id}`, 8, 60_000)) return jsonError(429, "Take a minute to try the last hint first 🙂");
   let body: z.infer<typeof Body>;
   try {
     body = Body.parse(await readJson(req));

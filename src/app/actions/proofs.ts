@@ -12,7 +12,7 @@ export async function claimCertificate(): Promise<{ ok: true; id: string } | { o
   if (!s) return { ok: false, error: "Join a class first" };
   const existing = await one("SELECT id FROM proofs WHERE kind = 'certificate' AND student_id = $1", [s.id]);
   if (existing) return { ok: true, id: existing.id };
-  if (!rateLimit(`cert:${s.id}`, 3, 60_000)) return { ok: false, error: "Please wait a moment" };
+  if (!await rateLimit(`cert:${s.id}`, 3, 60_000)) return { ok: false, error: "Please wait a moment" };
   const j = await journey(s);
   const assigned = j.filter((m) => m.state !== "not_assigned");
   const finished = assigned.filter((m) => m.state === "done" || m.state === "tested_out");

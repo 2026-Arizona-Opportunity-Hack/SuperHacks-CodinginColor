@@ -185,3 +185,31 @@ CREATE TABLE IF NOT EXISTS family_links (
   created_at timestamptz NOT NULL DEFAULT now(),
   revoked_at timestamptz
 );
+
+-- ── Security hardening ──
+-- Shared rate limiter (works across serverless instances). Keys are SHA-256 hashes, never raw IPs or emails.
+CREATE TABLE IF NOT EXISTS rate_limits (
+  key_hash text PRIMARY KEY,
+  count    int NOT NULL,
+  reset_at timestamptz NOT NULL
+);
+
+-- Account lockout and two-factor authentication for staff.
+ALTER TABLE users ADD COLUMN IF NOT EXISTS failed_logins int NOT NULL DEFAULT 0;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS locked_until timestamptz;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_secret text;          -- AES-256-GCM encrypted
+ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_enabled boolean NOT NULL DEFAULT false;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS backup_codes text[] NOT NULL DEFAULT '{}'; -- SHA-256 hashes
+ALTER TABLE users ADD COLUMN IF NOT EXISTS password_changed_at timestamptz NOT NULL DEFAULT now();
+ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_last_step bigint NOT NULL DEFAULT 0; -- blocks replay of a used code
+
+-- Second step of a 2FA sign-in: short-lived, single-use.
+CREATE TABLE IF NOT EXISTS mfa_challenges (
+  token_hash text PRIMARY KEY,
+  user_id    uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  attempts   int NOT NULL DEFAULT 0,
+  expires_at timestamptz NOT NULL
+);
+
+-- Teachers can close a class to new joiners once the roster is set.
+ALTER TABLE classes ADD COLUMN IF NOT EXISTS join_open boolean NOT NULL DEFAULT true;

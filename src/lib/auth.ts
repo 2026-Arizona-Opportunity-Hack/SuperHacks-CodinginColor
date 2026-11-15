@@ -12,17 +12,21 @@ import { one, q } from "./db";
  */
 
 export type Role = "admin" | "instructor" | "reviewer";
-export type StaffUser = { id: string; email: string; name: string; role: Role; organization: string };
+export type StaffUser = { id: string; email: string; name: string; role: Role; organization: string; totp_enabled: boolean };
 export type Student = { id: string; class_id: string; display_name: string; resume_code: string; xp: number };
 
-const STAFF_COOKIE = "cic_session";
-const STUDENT_COOKIE = "cic_student";
+// In production the __Host- prefix makes the browser enforce Secure, Path=/ and no Domain,
+// so a sibling subdomain can never set or overwrite these cookies.
+const PROD = process.env.NODE_ENV === "production";
+const STAFF_COOKIE = PROD ? "__Host-cic_session" : "cic_session";
+const STUDENT_COOKIE = PROD ? "__Host-cic_student" : "cic_student";
+export const MFA_COOKIE = PROD ? "__Host-cic_mfa" : "cic_mfa";
 const SESSION_DAYS = 14;
 
 export const sha256 = (s: string) => crypto.createHash("sha256").update(s).digest("hex");
 export const newToken = () => crypto.randomBytes(32).toString("base64url");
 
-const cookieOpts = (maxAgeDays: number) => ({
+export const cookieOpts = (maxAgeDays: number) => ({
   httpOnly: true,
   sameSite: "lax" as const,
   secure: process.env.NODE_ENV === "production",
@@ -49,21 +53,29 @@ export async function endStaffSession() {
   jar.delete(STAFF_COOKIE);
 }
 
+export async function endAllStaffSessions(userId: string) {
+  await q("DELETE FROM sessions WHERE user_id = $1", [userId]);
+}
+
 export async function currentStaff(): Promise<StaffUser | null> {
   const token = (await cookies()).get(STAFF_COOKIE)?.value;
   if (!token) return null;
   return one<StaffUser>(
-    `SELECT u.id, u.email, u.name, u.role, u.organization FROM sessions s JOIN users u ON u.id = s.user_id
+    `SELECT u.id, u.email, u.name, u.role, u.organization, u.totp_enabled FROM sessions s JOIN users u ON u.id = s.user_id
      WHERE s.token_hash = $1 AND s.expires_at > now()`,
     [sha256(token)]
   );
 }
 
 /** For pages and server actions: redirects to /login, or to / if the role is not allowed. */
-export async function requireStaff(roles: Role[] = ["admin", "instructor", "reviewer"]): Promise<StaffUser> {
+export async function requireStaff(roles: Role[] = ["admin", "instructor", "reviewer"], opts: { allowWithout2fa?: boolean } = {}): Promise<StaffUser> {
   const user = await currentStaff();
   if (!user) redirect("/login");
   if (!roles.includes(user.role)) redirect("/");
+  // With REQUIRE_ADMIN_2FA=true, admins can't reach anything until two-step verification is on.
+  if (user.role === "admin" && !user.totp_enabled && process.env.REQUIRE_ADMIN_2FA === "true" && !opts.allowWithout2fa) {
+    redirect("/account?setup2fa=required");
+  }
   return user;
 }
 
@@ -100,16 +112,5 @@ export async function audit(actor: string, action: string, target = "") {
   await q("INSERT INTO audit_log (actor, action, target) VALUES ($1, $2, $3)", [actor, action, target]);
 }
 
-// ── Rate limiting (in-memory, per server instance; enough to stop brute force on a small deploy) ──
-
-const buckets = new Map<string, { count: number; reset: number }>();
-export function rateLimit(key: string, limit: number, windowMs: number): boolean {
-  const now = Date.now();
-  const b = buckets.get(key);
-  if (!b || b.reset < now) {
-    buckets.set(key, { count: 1, reset: now + windowMs });
-    return true;
-  }
-  b.count++;
-  return b.count <= limit;
-}
+// Rate limiting lives in ./security (Postgres-backed so it holds across serverless instances).
+export { rateLimit } from "./security";
