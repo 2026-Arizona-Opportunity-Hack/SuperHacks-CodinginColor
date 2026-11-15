@@ -36,7 +36,7 @@ export function extractJson(text: string): unknown {
 }
 
 /** Calls the model and returns parsed, schema-checked JSON, or null on any failure. */
-export async function askJson<T>(schema: z.ZodType<T>, system: string, user: string, opts: { maxTokens?: number; temperature?: number; image?: string } = {}): Promise<T | null> {
+export async function askJson<S extends z.ZodTypeAny>(schema: S, system: string, user: string, opts: { maxTokens?: number; temperature?: number; image?: string } = {}): Promise<z.output<S> | null> {
   if (!aiEnabled()) return null;
   const userContent: OpenAI.ChatCompletionUserMessageParam["content"] = opts.image
     ? [
