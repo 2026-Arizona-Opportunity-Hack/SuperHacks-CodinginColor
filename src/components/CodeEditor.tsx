@@ -13,8 +13,7 @@ function useDark() {
   const [dark, setDark] = useState(false);
   useEffect(() => {
     const check = () => {
-      const t = document.documentElement.dataset.theme;
-      setDark(t ? t === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches);
+      setDark(document.documentElement.dataset.theme === "dark");
     };
     check();
     const obs = new MutationObserver(check);

@@ -46,10 +46,8 @@ export function ReadingMode() {
     apply(next);
   };
   const toggle = (k: keyof Prefs, on: string) => update({ ...p, [k]: p[k] === on ? undefined : on });
-  // Read the system theme after mount so server and client render the same first frame.
-  const [systemDark, setSystemDark] = useState(false);
-  useEffect(() => setSystemDark(window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false), []);
-  const dark = p.theme ? p.theme === "dark" : systemDark;
+  // The site is light (green-and-white) by default; dark is an explicit choice from this toggle.
+  const dark = p.theme === "dark";
 
   const options: { k: keyof Prefs; on: string; label: string }[] = [
     { k: "font", on: "dyslexia", label: t("a11y.dyslexia") },

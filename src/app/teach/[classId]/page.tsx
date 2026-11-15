@@ -9,6 +9,7 @@ import { canManageClass, requireStaff } from "@/lib/auth";
 import { one, q } from "@/lib/db";
 import { classRoster, conceptHeat, gainRows, summarize } from "@/lib/stats";
 import { LiveRefresh } from "./LiveRefresh";
+import { Counter, GrowBar } from "@/components/motion/Effects";
 import { ReteachCard } from "./ReteachCard";
 import { RosterImport } from "./RosterImport";
 import { JoinLock, ModuleToggle, StudentActions, ResolveHand } from "./ClassControls";
@@ -99,15 +100,15 @@ export default async function ClassPage({ params, searchParams }: { params: Prom
       </section>
 
       {/* Headline numbers */}
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Class summary">
-        <Stat icon={<AlertTriangle className="h-5 w-5 text-bad" />} value={stuck.length} label="stuck right now" />
-        <Stat icon={<UserX className="h-5 w-5 text-muted" />} value={notStarted.length} label="haven't started" />
-        <Stat icon={<Hand className="h-5 w-5 text-warn" />} value={hands.length} label="hands raised" />
-        <Stat icon={<TrendingUp className="h-5 w-5 text-good" />} value={gain ? `${gain.gain >= 0 ? "+" : ""}${gain.gain}` : "—"} label={gain ? `learning gain (pts, n=${gain.n})` : "learning gain (no post-tests yet)"} />
+      <section className="cascade grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Class summary">
+        <Stat icon={<AlertTriangle className="h-5 w-5 text-bad" />} value={<Counter value={stuck.length} />} label="stuck right now" />
+        <Stat icon={<UserX className="h-5 w-5 text-muted" />} value={<Counter value={notStarted.length} />} label="haven't started" />
+        <Stat icon={<Hand className="h-5 w-5 text-warn" />} value={<Counter value={hands.length} />} label="hands raised" />
+        <Stat icon={<TrendingUp className="h-5 w-5 text-good" />} value={gain ? <Counter value={gain.gain} decimals={1} prefix={gain.gain >= 0 ? "+" : ""} /> : "—"} label={gain ? `learning gain (pts, n=${gain.n})` : "learning gain (no post-tests yet)"} />
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
-        <div className="space-y-6">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="min-w-0 space-y-6">
           {hands.length > 0 && (
             <section className="card border-warn/40 p-5" aria-labelledby="hands">
               <h2 id="hands" className="flex items-center gap-2 font-bold"><Hand className="h-4 w-4 text-warn" aria-hidden /> Hands raised</h2>
@@ -143,7 +144,7 @@ export default async function ClassPage({ params, searchParams }: { params: Prom
                       <th scope="col" className="px-4 py-2"><span className="sr-only">Actions</span></th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="cascade">
                     {[...roster].sort((a, b) => order(a.status) - order(b.status)).map((s) => {
                       const pct = s.total ? Math.round((100 * Math.min(s.completed, s.total)) / s.total) : 0;
                       const g = perStudent.get(s.id);
@@ -154,11 +155,11 @@ export default async function ClassPage({ params, searchParams }: { params: Prom
                             {s.display_name}
                             {!s.claimed && <span className="ms-2 chip bg-raised text-muted">not joined</span>}
                           </th>
-                          <td className="px-4 py-3"><span className={`chip ${STATUS[s.status].cls}`}>{STATUS[s.status].label}</span></td>
+                          <td className="px-4 py-3"><span className={`chip ${STATUS[s.status].cls} ${s.status === "stuck" ? "pulse-soft" : ""}`}>{STATUS[s.status].label}</span></td>
                           <td className="px-4 py-3">
                             <div className="flex items-center gap-2">
                               <div className="h-2 w-20 overflow-hidden rounded-full bg-raised" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label={`${s.display_name} progress`}>
-                                <div className="h-full bg-brand" style={{ width: `${pct}%` }} />
+                                <GrowBar pct={pct} className="bg-brand" />
                               </div>
                               <span className="text-xs text-muted">{pct}%</span>
                             </div>
@@ -197,7 +198,7 @@ export default async function ClassPage({ params, searchParams }: { params: Prom
                   <li key={c.concept}>
                     <div className="flex justify-between text-sm"><span className="font-semibold capitalize">{c.concept}</span><span>{c.count}/{roster.length} · {c.pct}%</span></div>
                     <div className="mt-1 h-3 overflow-hidden rounded-full bg-raised">
-                      <div className={`h-full rounded-full ${c.pct >= 50 ? "bg-bad" : c.pct >= 25 ? "bg-warn" : "bg-good"}`} style={{ width: `${c.pct}%` }} />
+                      <GrowBar pct={c.pct} className={`rounded-full ${c.pct >= 50 ? "bg-bad" : c.pct >= 25 ? "bg-warn" : "bg-good"}`} />
                     </div>
                   </li>
                 ))}
@@ -241,7 +242,7 @@ const order = (s: string) => ({ stuck: 0, not_started: 1, on_track: 2, done: 3 }
 
 function Stat({ icon, value, label }: { icon: React.ReactNode; value: React.ReactNode; label: string }) {
   return (
-    <div className="card flex items-center gap-4 p-5">
+    <div className="card card-hover flex items-center gap-4 p-5">
       <span className="grid h-11 w-11 place-items-center rounded-xl bg-raised" aria-hidden>{icon}</span>
       <div>
         <p className="text-2xl font-extrabold">{value}</p>

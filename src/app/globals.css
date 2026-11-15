@@ -4,70 +4,59 @@
 
 /* shadcn-style CSS variables read by third-party components (e.g. the team lanyards), derived from our tokens. */
 :root {
-  --chart-1: 109 40 217;
-  --chart-2: 234 88 12;
-  --chart-3: 13 148 136;
-  --chart-4: 219 39 119;
-  --chart-5: 2 132 199;
+  --chart-1: 46 107 18;
+  --chart-2: 110 168 66;
+  --chart-3: 140 198 101;
+  --chart-4: 186 237 145;
+  --chart-5: 63 127 25;
   --color-background: rgb(var(--bg));
   --color-foreground: rgb(var(--ink));
   --color-card: rgb(var(--surface));
   --color-muted-foreground: rgb(var(--muted));
 }
 
-/* ── Design tokens (RGB triplets so Tailwind can apply opacity) ── */
+/* ── Design tokens (RGB triplets so Tailwind can apply opacity) ──
+   Palette: Coding in Color's fresh green #BAED91 ("leaf") through to white.
+   #BAED91 is used for fills (buttons, highlights) with dark green text on top (10.7:1);
+   a deep green of the same hue carries links and labels on white (6.5:1). */
 :root {
-  --bg: 250 249 255;
-  --surface: 255 255 255;
-  --raised: 244 242 253;
-  --ink: 24 20 43;
-  --muted: 92 88 115;
-  --line: 226 223 240;
-  --brand: 109 40 217;      /* violet */
+  --bg: 249 253 245;        /* #F9FDF5 near-white with a green tint */
+  --surface: 255 255 255;   /* white cards */
+  --raised: 240 250 231;    /* #F0FAE7 */
+  --ink: 22 38 14;          /* #16260E */
+  --muted: 82 102 72;       /* #526648 */
+  --line: 222 238 208;      /* #DEEED0 */
+  --leaf: 186 237 145;      /* #BAED91 brand fill */
+  --leaf-ink: 22 48 10;     /* #16300A text on leaf */
+  --brand: 46 107 18;       /* #2E6B12 links, labels, icons */
   --brand-ink: 255 255 255;
-  --accent: 234 88 12;      /* warm orange */
+  --accent: 63 127 25;      /* #3F7F19 */
   --good: 21 128 61;
   --warn: 180 83 9;
   --bad: 190 18 60;
-  /* Chart series (validated for colour-blind separation): pre = orange, post = violet */
-  --chart-pre: #e8833a;
-  --chart-post: #6d28d9;
+  /* Chart series (validated for colour-blind separation): pre = light green, post = deep green */
+  --chart-pre: #8CC665;
+  --chart-post: #2E6B12;
   color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: 14 12 26;
-    --surface: 23 20 40;
-    --raised: 33 29 56;
-    --ink: 240 238 252;
-    --muted: 168 163 196;
-    --line: 52 47 82;
-    --brand: 167 139 250;
-    --brand-ink: 20 12 40;
-    --accent: 251 146 60;
-    --good: 74 222 128;
-    --warn: 251 191 36;
-    --bad: 251 113 133;
-    --chart-pre: #d9732a;
-    --chart-post: #9b72f2;
-    color-scheme: dark;
-  }
-}
+/* Dark mode is opt-in from the header toggle: the site's default look is green-and-white. */
 :root[data-theme="dark"] {
-  --bg: 14 12 26;
-  --surface: 23 20 40;
-  --raised: 33 29 56;
-  --ink: 240 238 252;
-  --muted: 168 163 196;
-  --line: 52 47 82;
-  --brand: 167 139 250;
-  --brand-ink: 20 12 40;
-  --accent: 251 146 60;
+  --bg: 12 20 10;           /* #0C140A */
+  --surface: 20 31 16;
+  --raised: 28 43 22;
+  --ink: 236 248 226;
+  --muted: 160 184 146;
+  --line: 44 64 36;
+  --leaf: 186 237 145;
+  --leaf-ink: 22 48 10;
+  --brand: 186 237 145;     /* #BAED91 reads beautifully on dark */
+  --brand-ink: 22 48 10;
+  --accent: 143 214 92;
   --good: 74 222 128;
   --warn: 251 191 36;
   --bad: 251 113 133;
-  --chart-pre: #d9732a;
-  --chart-post: #9b72f2;
+  --chart-pre: #3B7320;
+  --chart-post: #6EA842;
   color-scheme: dark;
 }
 
@@ -133,13 +122,13 @@ body {
       disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-primary {
-    @apply btn bg-brand text-brand-ink hover:brightness-110 active:scale-[.98];
+    @apply btn bg-leaf text-leaf-ink hover:brightness-105 active:scale-[.98];
   }
   .btn-ghost {
     @apply btn border border-line bg-surface text-ink hover:bg-raised;
   }
   .btn-accent {
-    @apply btn bg-accent text-white hover:brightness-110 active:scale-[.98];
+    @apply btn bg-brand text-brand-ink hover:brightness-110 active:scale-[.98];
   }
   .input {
     @apply min-h-[44px] w-full rounded-xl border border-line bg-surface px-3 py-2 text-ink placeholder:text-muted/70
@@ -159,9 +148,9 @@ body {
 /* Animated gradient used on the landing hero */
 .mesh {
   background:
-    radial-gradient(40% 50% at 20% 20%, rgb(var(--brand) / .28), transparent 70%),
-    radial-gradient(35% 45% at 80% 10%, rgb(var(--accent) / .22), transparent 70%),
-    radial-gradient(40% 50% at 60% 90%, rgb(20 184 166 / .18), transparent 70%);
+    radial-gradient(40% 50% at 20% 20%, rgb(var(--leaf) / .55), transparent 70%),
+    radial-gradient(35% 45% at 80% 10%, rgb(var(--leaf) / .35), transparent 70%),
+    radial-gradient(40% 50% at 60% 90%, rgb(var(--brand) / .12), transparent 70%);
   animation: drift 18s ease-in-out infinite alternate;
 }
 @keyframes drift {
@@ -178,3 +167,71 @@ body {
   body { background: white; color: black; }
   .card { box-shadow: none; border-color: #ddd; break-inside: avoid; }
 }
+
+/* ── Motion layer (all of it is switched off by the reduced-motion / lite-mode rules above) ── */
+
+/* Drifting code snippets behind the hero */
+.float-code {
+  animation-name: float-code;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+@keyframes float-code {
+  0%   { transform: translate3d(0, 0, 0) rotate(-2deg); opacity: .25; }
+  50%  { opacity: .6; }
+  100% { transform: translate3d(24px, -38px, 0) rotate(3deg); opacity: .3; }
+}
+
+/* Shine sweep across primary buttons on hover */
+.btn-primary, .btn-accent { position: relative; overflow: hidden; isolation: isolate; }
+.btn-primary::after, .btn-accent::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / .35) 48%, transparent 66%);
+  transform: translateX(-120%);
+  transition: transform .7s cubic-bezier(.2, .7, .2, 1);
+}
+.btn-primary:hover::after, .btn-accent:hover::after { transform: translateX(120%); }
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:active:not(:disabled) { transform: translateY(0) scale(.98); }
+
+/* Cards that lift and glow on hover */
+.card-hover { transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s, border-color .35s; }
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgb(var(--brand) / .45);
+  box-shadow: 0 1px 2px rgb(0 0 0 / .04), 0 18px 40px -18px rgb(var(--brand) / .45);
+}
+
+/* Rows and tiles cascade in on load */
+.cascade > * { animation: rise .55s cubic-bezier(.2, .7, .2, 1) both; }
+.cascade > *:nth-child(1) { animation-delay: .02s; }
+.cascade > *:nth-child(2) { animation-delay: .06s; }
+.cascade > *:nth-child(3) { animation-delay: .10s; }
+.cascade > *:nth-child(4) { animation-delay: .14s; }
+.cascade > *:nth-child(5) { animation-delay: .18s; }
+.cascade > *:nth-child(6) { animation-delay: .22s; }
+.cascade > *:nth-child(7) { animation-delay: .26s; }
+.cascade > *:nth-child(8) { animation-delay: .30s; }
+.cascade > *:nth-child(n + 9) { animation-delay: .34s; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Gentle pulse for live / attention states */
+.pulse-soft { animation: pulse-soft 2.4s ease-in-out infinite; }
+@keyframes pulse-soft {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--bad) / .35); }
+  50%      { box-shadow: 0 0 0 8px rgb(var(--bad) / 0); }
+}
+
+/* Animated gradient text */
+.text-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 6s linear infinite;
+}
+@keyframes shimmer { to { background-position: 200% center; } }

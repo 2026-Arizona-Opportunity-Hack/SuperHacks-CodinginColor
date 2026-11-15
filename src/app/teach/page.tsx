@@ -39,10 +39,10 @@ export default async function TeachPage() {
           </Link>
         </div>
       ) : (
-        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="cascade mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {classes.map((c) => (
             <li key={c.id}>
-              <Link href={`/teach/${c.id}`} className="card block h-full p-5 transition hover:-translate-y-0.5 hover:border-brand/50">
+              <Link href={`/teach/${c.id}`} className="card card-hover block h-full p-5">
                 <p className="text-xs font-semibold text-muted">{c.school}</p>
                 <h2 className="mt-1 font-display text-lg font-bold">{c.name}</h2>
                 <p className="mt-1 text-sm text-muted">

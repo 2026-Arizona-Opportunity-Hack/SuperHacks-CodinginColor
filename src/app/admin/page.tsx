@@ -6,6 +6,7 @@ import { q } from "@/lib/db";
 import { cohortStats, gainRows, summarize } from "@/lib/stats";
 import { GainChart } from "@/components/GainChart";
 import { ApiKeys, RoleSelect } from "./AdminControls";
+import { Counter } from "@/components/motion/Effects";
 
 export const metadata: Metadata = { title: "Admin" };
 
@@ -37,11 +38,11 @@ export default async function AdminPage() {
         <Link href="/admin/report" className="btn-primary"><FileText className="h-4 w-4" aria-hidden /> Funder report</Link>
       </div>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Totals">
-        <Tile value={overall ? `${overall.gain >= 0 ? "+" : ""}${overall.gain}` : "—"} label={`avg learning gain (pts), ${overall?.n ?? 0} student-modules`} accent />
-        <Tile value={t.students} label={`students · ${t.active} active this week`} />
-        <Tile value={t.classes} label="classes" />
-        <Tile value={t.orgs} label="partner organizations" />
+      <section className="cascade grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Totals">
+        <Tile value={overall ? <Counter value={overall.gain} decimals={1} prefix={overall.gain >= 0 ? "+" : ""} /> : "—"} label={`avg learning gain (pts), ${overall?.n ?? 0} student-modules`} accent />
+        <Tile value={<Counter value={t.students} />} label={`students · ${t.active} active this week`} />
+        <Tile value={<Counter value={t.classes} />} label="classes" />
+        <Tile value={<Counter value={t.orgs} />} label="partner organizations" />
       </section>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -58,7 +59,7 @@ export default async function AdminPage() {
                 {["Class", "Cohort", "Instructor", "Students", "Active 7d", "Completion", "Learning gain"].map((h) => <th key={h} scope="col" className="px-4 py-2 text-start">{h}</th>)}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="cascade">
               {classes.map((c) => (
                 <tr key={c.id} className="border-t border-line">
                   <th scope="row" className="px-4 py-3 text-start"><Link href={`/teach/${c.id}`} className="font-semibold text-brand hover:underline">{c.name}</Link><span className="block text-xs font-normal text-muted">{c.school}</span></th>
@@ -107,7 +108,7 @@ export default async function AdminPage() {
 
 function Tile({ value, label, accent }: { value: React.ReactNode; label: string; accent?: boolean }) {
   return (
-    <div className="card p-5">
+    <div className="card card-hover p-5">
       <p className={`text-3xl font-extrabold ${accent ? "text-good" : ""}`}>{value}</p>
       <p className="mt-1 text-xs text-muted">{label}</p>
     </div>

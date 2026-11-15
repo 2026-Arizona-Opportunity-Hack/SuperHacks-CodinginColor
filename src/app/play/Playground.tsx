@@ -84,7 +84,7 @@ export function Playground() {
           </button>
         </div>
       </div>
-      <div className="grid gap-4 lg:grid-cols-[1fr_360px]">
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="min-w-0 space-y-3">
           <CodeEditor value={code} onChange={change} label="playground" minHeight="360px" />
           <div className="card overflow-hidden" aria-live="polite">

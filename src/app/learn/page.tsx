@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Flame, Sparkles, Trophy, Zap } from "lucide-react";
+import { Counter } from "@/components/motion/Effects";
 import { currentStudent } from "@/lib/auth";
 import { one, q } from "@/lib/db";
 import { BADGES, journey, streakDays } from "@/lib/progress";
@@ -51,7 +52,7 @@ export default async function LearnPage() {
   const showCatchUp = !hasStarted && assignedAhead >= 2;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
       <section aria-labelledby="journey">
         <p className="text-sm font-semibold text-brand">
           {cls?.school} · {cls?.name}
@@ -92,12 +93,12 @@ export default async function LearnPage() {
         />
       </section>
 
-      <aside className="space-y-4">
+      <aside className="cascade space-y-4">
         <CertificateCard existingId={certId} eligible={assignedAhead > 0 && modules.filter((m) => m.state !== "not_assigned").every((m) => m.state === "done" || m.state === "tested_out")} />
         <div className="card grid grid-cols-2 gap-3 p-5">
           <div>
             <p className="flex items-center gap-1 text-2xl font-extrabold">
-              <Zap className="h-5 w-5 text-brand" aria-hidden /> {student.xp}
+              <Zap className="h-5 w-5 text-brand" aria-hidden /> <Counter value={student.xp} />
             </p>
             <p className="text-xs text-muted">{t("learn.xp")}</p>
           </div>

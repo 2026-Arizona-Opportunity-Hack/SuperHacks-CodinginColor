@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useCalm } from "@/components/motion/MotionProvider";
 import { Check, Clock, Lock, Play, SkipForward } from "lucide-react";
 import type { JourneyModule } from "@/lib/progress";
 
@@ -8,7 +9,7 @@ type Labels = Record<"startHere" | "continue" | "review" | "locked" | "lockedHel
 
 /** The module map: a winding path where finished modules glow and the next one pulses. */
 export function JourneyPath({ modules, labels, currentId }: { modules: JourneyModule[]; labels: Labels; currentId?: string }) {
-  const reduce = useReducedMotion();
+  const reduce = useCalm();
   return (
     <ol className="relative mt-6 space-y-5">
       <span className="absolute bottom-6 start-[27px] top-6 w-1 rounded-full bg-line" aria-hidden />

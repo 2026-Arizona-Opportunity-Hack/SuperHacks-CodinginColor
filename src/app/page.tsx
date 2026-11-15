@@ -8,6 +8,7 @@ import { ImpactGlobe } from "@/components/landing/ImpactGlobe";
 import { CrowdCanvas } from "@/components/landing/CrowdCanvas";
 import { TeamSection } from "@/components/landing/TeamSection";
 import { LOCALES } from "@/i18n/config";
+import { FloatingCode, Magnetic, ScrollLine, Spotlight, SplitWords, TiltCard } from "@/components/motion/Effects";
 
 export default async function Home() {
   const t = await getT();
@@ -31,29 +32,37 @@ export default async function Home() {
     <div className="relative">
       <div className="mesh lite-hide pointer-events-none absolute inset-x-[-20%] top-[-120px] -z-10 h-[620px]" aria-hidden />
 
-      <section className="grid items-center gap-10 pb-10 pt-6 lg:grid-cols-[1.1fr_1fr] lg:pt-14">
+      <section className="relative grid items-center gap-10 pb-10 pt-6 lg:grid-cols-[1.1fr_1fr] lg:pt-14">
+        <Spotlight />
+        <FloatingCode />
         <div>
           <Reveal>
-            <span className="chip bg-brand/10 text-brand">{t("landing.badge")}</span>
+            <span className="chip gap-2 bg-brand/10 py-1 ps-1 text-brand">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/cic-logo-256.png" alt="Coding in Color" width={20} height={20} className="h-5 w-5 rounded-full bg-white" />
+              {t("landing.badge")}
+            </span>
           </Reveal>
-          <Reveal delay={0.05}>
-            <h1 className="h-display mt-4 text-4xl leading-[1.05] sm:text-6xl">
-              {t("landing.title1")}
-              <br />
-              <span className="bg-gradient-to-r from-brand to-accent bg-clip-text text-transparent">{t("landing.title2")}</span>
-            </h1>
-          </Reveal>
+          <h1 className="h-display mt-4 text-4xl leading-[1.05] sm:text-6xl">
+            <SplitWords text={t("landing.title1")} delay={0.05} />
+            <br />
+            <SplitWords text={t("landing.title2")} delay={0.3} className="text-shimmer bg-gradient-to-r from-brand via-accent to-brand bg-clip-text text-transparent" />
+          </h1>
           <Reveal delay={0.1}>
             <p className="mt-5 max-w-xl text-lg text-muted">{t("landing.subtitle")}</p>
           </Reveal>
           <Reveal delay={0.15}>
             <div className="mt-7 flex flex-wrap gap-3">
-              <Link href="/join" className="btn-primary !min-h-[52px] !px-6 text-base">
-                {t("landing.ctaStudent")} <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden />
-              </Link>
-              <Link href="/login" className="btn-ghost !min-h-[52px] !px-6 text-base">
-                {t("landing.ctaTeacher")}
-              </Link>
+              <Magnetic>
+                <Link href="/join" className="btn-primary !min-h-[52px] !px-6 text-base shadow-[0_10px_30px_-10px_rgb(var(--brand)/.7)]">
+                  {t("landing.ctaStudent")} <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden />
+                </Link>
+              </Magnetic>
+              <Magnetic>
+                <Link href="/login" className="btn-ghost !min-h-[52px] !px-6 text-base">
+                  {t("landing.ctaTeacher")}
+                </Link>
+              </Magnetic>
             </div>
           </Reveal>
           <Reveal delay={0.2}>
@@ -89,10 +98,12 @@ export default async function Home() {
             {t("landing.how")}
           </h2>
         </Reveal>
-        <ol className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <ScrollLine className="mt-6 hidden lg:block" />
+        <ol className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <Reveal key={s.title} delay={i * 0.08}>
-              <li className="card h-full p-5 transition hover:-translate-y-1">
+              <TiltCard className="h-full">
+              <li className="card card-hover h-full list-none p-5">
                 <div className="flex items-center gap-3">
                   <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand/10 text-brand">
                     <s.icon className="h-5 w-5" aria-hidden />
@@ -102,6 +113,7 @@ export default async function Home() {
                 <h3 className="mt-4 font-display text-lg font-bold">{s.title}</h3>
                 <p className="mt-2 text-sm text-muted">{s.body}</p>
               </li>
+              </TiltCard>
             </Reveal>
           ))}
         </ol>
@@ -158,7 +170,7 @@ export default async function Home() {
       <p className="mt-10 text-xs text-muted">
         Crowd animation adapted from <a className="underline" href="https://skiper-ui.com" rel="noreferrer">Skiper UI</a> · Open Peeps illustrations by{" "}
         <a className="underline" href="https://www.openpeeps.com" rel="noreferrer">Pablo Stanley</a> · Team badges by{" "}
-        <a className="underline" href="https://21st.dev/@dhxwhy" rel="noreferrer">@dhxwhy</a> · World map: Natural Earth
+        <a className="underline" href="https://21st.dev/@dhxwhy" rel="noreferrer">@dhxwhy</a> · World map: Natural Earth · Coding in Color logo from the organisation&apos;s hackathon brief
       </p>
     </div>
   );

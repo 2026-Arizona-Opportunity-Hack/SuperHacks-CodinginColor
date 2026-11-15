@@ -88,7 +88,7 @@ export function CodeView({ activity, submit, onContinue, isLast }: ViewProps) {
         <Markdown text={content.prompt} />
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[1fr_340px]">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div className="min-w-0 space-y-3">
           <CodeEditor value={code} onChange={onChange} label={activity.title} />
           <div className="flex flex-wrap gap-2">

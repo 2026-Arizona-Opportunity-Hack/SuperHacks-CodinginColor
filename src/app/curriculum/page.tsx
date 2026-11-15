@@ -35,10 +35,10 @@ export default async function CurriculumPage() {
           <Converter aiReady={aiEnabled()} />
         </div>
       )}
-      <ul className="grid gap-4 sm:grid-cols-2">
+      <ul className="cascade grid gap-4 sm:grid-cols-2">
         {modules.map((m) => (
           <li key={m.id}>
-            <Link href={`/curriculum/${m.id}`} className="card flex h-full gap-4 p-5 transition hover:-translate-y-0.5 hover:border-brand/50">
+            <Link href={`/curriculum/${m.id}`} className="card card-hover flex h-full gap-4 p-5">
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand/10 font-display text-lg font-extrabold text-brand">{m.position}</span>
               <span className="min-w-0">
                 <span className="flex flex-wrap items-center gap-2">

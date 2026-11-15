@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Table2, BarChart3 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export type GainDatum = { label: string; pre: number; post: number; gain: number; n: number };
 
@@ -57,7 +58,14 @@ export function GainChart({ title, data }: { title: string; data: GainDatum[] })
                 {(["pre", "post"] as const).map((k) => (
                   <div key={k} className="flex items-center gap-2">
                     <div className="h-3 flex-1 overflow-hidden rounded-e bg-raised">
-                      <div className="h-full rounded-e" style={{ width: `${d[k]}%`, background: `var(--chart-${k})` }} />
+                      <motion.div
+                        className="h-full rounded-e"
+                        style={{ background: `var(--chart-${k})` }}
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${d[k]}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.9, delay: k === "post" ? 0.25 : 0, ease: [0.2, 0.7, 0.2, 1] }}
+                      />
                     </div>
                     <span className="w-8 text-end font-mono text-xs text-muted">{d[k]}</span>
                   </div>
