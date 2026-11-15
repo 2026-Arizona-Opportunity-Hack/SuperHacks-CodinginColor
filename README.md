@@ -100,7 +100,8 @@ npm run db:reset       # wipe the local database (re-seeded on next start)
 | `DATABASE_URL` | Production database | Empty → embedded PGlite in `.data/`. Use your Supabase **transaction pooler** URI in production. |
 | `OPENAI_API_KEY` | AI hints, worksheet converter, translation, reteach plans | Empty → rule-based hints and built-in plans; AI-only tools are disabled. |
 | `OPENAI_BASE_URL` | Non-OpenAI providers | e.g. `https://ai.ohack.dev/v1`. Empty → OpenAI. |
-| `AI_MODEL` | Model name | `gpt-4o-mini` |
+| `AI_MODEL` | Model name | `gpt-4o-mini`; on the OHack gateway use `muse-wonder` |
+| `AI_MIN_TOKENS` | Room for reasoning models to think | `4000` |
 | `AI_DISABLE_THINKING` | Qwen-style hosts | `true` to skip slow "thinking" mode |
 | `SOLANA_SECRET_KEY` | Anchoring certificates/reports on-chain | Empty → proofs are hashed but not anchored. Devnet key is fine. |
 | `SOLANA_RPC_URL` | Solana cluster | `https://api.devnet.solana.com` |

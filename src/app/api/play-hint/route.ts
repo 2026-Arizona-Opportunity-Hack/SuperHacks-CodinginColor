@@ -7,7 +7,7 @@ import { jsonError, readJson, sameOrigin } from "@/lib/http";
 import { getLocale } from "@/i18n/server";
 import { languageName } from "@/i18n/config";
 
-const Body = z.object({ code: z.string().max(20_000), error: z.string().max(2000).optional(), question: z.string().max(500).optional() });
+const Body = z.object({ code: z.string().max(20_000), error: z.string().max(2000).nullish(), question: z.string().max(500).nullish() });
 
 /** Hints for the no-login playground: same Socratic tutor, rate-limited per IP, nothing stored. */
 export async function POST(req: Request) {

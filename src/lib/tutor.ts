@@ -29,9 +29,9 @@ JSON shape: {"hint": "...", "concept": "..."}`;
 export type HintInput = {
   prompt: string;
   code: string;
-  failedTest?: string;
-  error?: string;
-  question?: string;
+  failedTest?: string | null;
+  error?: string | null;
+  question?: string | null;
   solution?: string;
   concept: string;
   language: string;

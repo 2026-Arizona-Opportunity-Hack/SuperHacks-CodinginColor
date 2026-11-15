@@ -76,7 +76,7 @@ export function ModuleEditor({ module, lessons, readOnly, aiReady }: { module: M
                 disabled={pending || !aiReady}
                 title={aiReady ? "Creates a translated copy as a draft" : "Add OPENAI_API_KEY to enable"}
                 onClick={() => start(async () => {
-                  setMsg("Translating… (about 30 seconds)");
+                  setMsg("Translating… (about 30–60 seconds)");
                   const r = await translateToNewModule(module.id, lang);
                   if (r.ok) router.push(`/curriculum/${r.id}`);
                   else setMsg(r.error);

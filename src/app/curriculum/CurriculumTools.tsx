@@ -78,7 +78,7 @@ export function Converter({ aiReady }: { aiReady: boolean }) {
           />
         </label>
         <button className="btn-accent flex-1" disabled={pending || !aiReady || (!text.trim() && !image)}>
-          {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <Wand2 className="h-4 w-4" aria-hidden />} {pending ? "Drafting the module (~30s)…" : "Convert to module"}
+          {pending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <Wand2 className="h-4 w-4" aria-hidden />} {pending ? "Drafting the module (about a minute)…" : "Convert to module"}
         </button>
       </div>
       {!aiReady && <p className="text-xs text-warn">Add OPENAI_API_KEY to .env to enable this.</p>}
