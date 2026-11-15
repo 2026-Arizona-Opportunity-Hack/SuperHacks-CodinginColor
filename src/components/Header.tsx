@@ -21,7 +21,7 @@ export async function Header() {
     <header className="no-print sticky top-0 z-30 border-b border-line/70 bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2.5 sm:px-6">
         <Link href="/" className="flex items-center gap-2 font-display text-lg font-extrabold">
-          <Logo />
+          <Logo className="h-9 w-9" />
           <span>
             CIC <span className="text-brand">Learn</span>
           </span>

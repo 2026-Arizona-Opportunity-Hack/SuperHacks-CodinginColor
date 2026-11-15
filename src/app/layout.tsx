@@ -17,7 +17,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", displ
 export const metadata: Metadata = {
   title: { default: "CIC Learn", template: "%s · CIC Learn" },
   description: "Coding in Color's curriculum and student progress platform: one link, every student unstuck.",
-  icons: { icon: "/icon.svg" },
+  icons: { icon: [{ url: "/brand/cic-logo-256.png", type: "image/png" }], apple: "/brand/cic-logo-512.png" },
   manifest: "/manifest.webmanifest",
 };
 export const viewport: Viewport = { themeColor: "#BAED91", width: "device-width", initialScale: 1 };

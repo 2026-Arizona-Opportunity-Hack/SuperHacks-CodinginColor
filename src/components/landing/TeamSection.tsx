@@ -46,7 +46,7 @@ const MEMBERS: LanyardMember[] = [
     name: "Coding in Color",
     role: "Nonprofit partner",
     team: "Phoenix, Arizona",
-    image: avatar("CIC", "#1F4D0C", "#5FA82E"),
+    image: "/brand/cic-logo-badge.png",
     bio: "Brings computer science and AI education to Arizona high schoolers whose schools don't offer it.",
     tags: ["501(c)(3)", "K12 CS", "AI Academy"],
     links: [{ label: "codingincolor.net", href: "https://codingincolor.net" }],

@@ -37,7 +37,11 @@ export default async function Home() {
         <FloatingCode />
         <div>
           <Reveal>
-            <span className="chip bg-brand/10 text-brand">{t("landing.badge")}</span>
+            <span className="chip gap-2 bg-brand/10 py-1 ps-1 text-brand">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/cic-logo-256.png" alt="Coding in Color" width={20} height={20} className="h-5 w-5 rounded-full bg-white" />
+              {t("landing.badge")}
+            </span>
           </Reveal>
           <h1 className="h-display mt-4 text-4xl leading-[1.05] sm:text-6xl">
             <SplitWords text={t("landing.title1")} delay={0.05} />
@@ -166,7 +170,7 @@ export default async function Home() {
       <p className="mt-10 text-xs text-muted">
         Crowd animation adapted from <a className="underline" href="https://skiper-ui.com" rel="noreferrer">Skiper UI</a> · Open Peeps illustrations by{" "}
         <a className="underline" href="https://www.openpeeps.com" rel="noreferrer">Pablo Stanley</a> · Team badges by{" "}
-        <a className="underline" href="https://21st.dev/@dhxwhy" rel="noreferrer">@dhxwhy</a> · World map: Natural Earth
+        <a className="underline" href="https://21st.dev/@dhxwhy" rel="noreferrer">@dhxwhy</a> · World map: Natural Earth · Coding in Color logo from the organisation&apos;s hackathon brief
       </p>
     </div>
   );

@@ -3,8 +3,8 @@
  *  - Pages: network-first; when offline, fall back to the last copy or /offline.
  *  - Lesson pages are cached so a student can keep reading; they're wiped when a student switches
  *    (shared lab machines), and nothing from staff pages or APIs is ever cached. */
-const VERSION = "cic-v1";
-const SHELL = ["/", "/join", "/play", "/offline", "/icon.svg", "/manifest.webmanifest", "/pyodide-worker.js"];
+const VERSION = "cic-v2";
+const SHELL = ["/", "/join", "/play", "/offline", "/brand/cic-logo-256.png", "/manifest.webmanifest", "/pyodide-worker.js"];
 const CACHEABLE_PAGE = /^\/($|join$|play$|offline$|learn(\/m\/[0-9a-f-]{36})?$)/;
 
 self.addEventListener("install", (e) => {
