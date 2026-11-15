@@ -10,7 +10,7 @@ Students use school Chromebooks, personal phones and shared lab machines, and so
 - **Screen readers:** landmarks (`header`, `nav`, `main`), labelled form fields, `aria-live` regions for results, hints and toasts, progress bars with values, status conveyed by text and not colour alone.
 - **Charts** have a legend, value labels and a **table view**; colours are validated for colour-blind separation.
 - **Touch targets** are at least 44 px.
-- **Languages:** English, Spanish, Arabic (full right-to-left layout). AI hints answer in the student's language. The `lang` and `dir` attributes are set on every page.
+- **Languages:** English, Spanish, Arabic (full right-to-left layout), French, Portuguese, Hindi, Chinese and Vietnamese. AI hints answer in the student's language. The `lang` and `dir` attributes are set on every page.
 - **Voice:** students can ask for a hint out loud and have hints read aloud (browser speech, nothing leaves the device).
 - **Low bandwidth:** offline support for Python and visited lessons; lite mode.
 

@@ -7,7 +7,8 @@ import { I18nProvider } from "@/i18n/client";
 import { Header } from "@/components/Header";
 import { OfflineSupport } from "@/components/OfflineSupport";
 
-const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+// Hindi and Chinese fall back to the device's system fonts (Noto / PingFang), which cover those scripts well.
+const sans = Plus_Jakarta_Sans({ subsets: ["latin", "latin-ext", "vietnamese"], variable: "--font-sans", display: "swap" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {

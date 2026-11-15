@@ -108,7 +108,7 @@ export default async function Home() {
       <section className="mt-24" aria-label="Reach">
         <Reveal>
           <ImpactGlobe
-            languages={LOCALES.map((l) => l.label)}
+            languages={LOCALES.map((l) => ({ code: l.code, label: l.label }))}
             schools={schoolNames}
             stats={[
               { label: "students", value: students },
