@@ -5,6 +5,7 @@ import { getLocale, getT } from "@/i18n/server";
 import { dirOf } from "@/i18n/config";
 import { I18nProvider } from "@/i18n/client";
 import { Header } from "@/components/Header";
+import { OfflineSupport } from "@/components/OfflineSupport";
 
 const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
@@ -38,6 +39,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main id="main" className="mx-auto w-full max-w-6xl px-4 pb-16 pt-6 sm:px-6">
             {children}
           </main>
+          <OfflineSupport />
         </I18nProvider>
       </body>
     </html>
