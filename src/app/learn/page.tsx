@@ -9,6 +9,8 @@ import { getT } from "@/i18n/server";
 import { switchStudent } from "@/app/actions/session";
 import { JourneyPath } from "./JourneyPath";
 import { LeaderboardToggle } from "./LeaderboardToggle";
+import { CertificateCard } from "./CertificateCard";
+import { myCertificate } from "@/app/actions/proofs";
 
 export const metadata: Metadata = { title: "My journey" };
 
@@ -33,6 +35,7 @@ export default async function LearnPage() {
     ),
   ]);
   await q("UPDATE students SET last_active = now() WHERE id = $1", [student.id]);
+  const certId = await myCertificate();
   const hidden = (await one("SELECT hide_from_leaderboard AS h FROM students WHERE id = $1", [student.id]))?.h ?? false;
 
   const modulesDone = modules.filter((m) => m.state === "done").length;
@@ -88,6 +91,7 @@ export default async function LearnPage() {
       </section>
 
       <aside className="space-y-4">
+        <CertificateCard existingId={certId} eligible={assignedAhead > 0 && modules.filter((m) => m.state !== "not_assigned").every((m) => m.state === "done" || m.state === "tested_out")} />
         <div className="card grid grid-cols-2 gap-3 p-5">
           <div>
             <p className="flex items-center gap-1 text-2xl font-extrabold">

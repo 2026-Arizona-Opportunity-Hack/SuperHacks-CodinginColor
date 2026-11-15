@@ -163,3 +163,17 @@ CREATE TABLE IF NOT EXISTS pair_rooms (
   updated_by  uuid REFERENCES students(id) ON DELETE SET NULL,
   updated_at  timestamptz NOT NULL DEFAULT now()
 );
+
+-- Proofs anchored on Solana: certificates and funder reports. Only a SHA-256 hash goes on-chain,
+-- never a name or score, so nothing personal is ever written to a public, permanent ledger.
+CREATE TABLE IF NOT EXISTS proofs (
+  id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  kind       text NOT NULL CHECK (kind IN ('certificate', 'report')),
+  student_id uuid REFERENCES students(id) ON DELETE SET NULL,
+  payload    jsonb NOT NULL,      -- the exact document that was hashed
+  hash       text NOT NULL,       -- sha256 of the canonical payload
+  signature  text,                -- Solana transaction signature (null if anchoring is disabled)
+  cluster    text NOT NULL DEFAULT 'devnet',
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS proofs_cert_once ON proofs (student_id) WHERE kind = 'certificate';

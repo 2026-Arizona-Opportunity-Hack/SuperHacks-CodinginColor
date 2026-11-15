@@ -27,14 +27,6 @@ export default async function ReportPage({ searchParams }: { searchParams: Promi
   const students = cohort ? shown.reduce((n, c) => n + c.students, 0) : t.students;
   const generated = new Date();
 
-  const summary = {
-    scope: cohort ?? "All cohorts",
-    students,
-    classes: shown.length,
-    learning_gain: overall ?? null,
-    by_concept: byConcept.map(({ key, ...g }) => g),
-    generated_at: generated.toISOString().slice(0, 10),
-  };
 
   return (
     <article className="mx-auto max-w-3xl space-y-6">
@@ -99,7 +91,7 @@ export default async function ReportPage({ searchParams }: { searchParams: Promi
         <p><b>Method.</b> Each module begins with a pretest and ends with a posttest made of the same questions. Learning gain is the average of (posttest − pretest) for students who took both, on a 0–100 scale. Pretests count once and never reveal answers. No individual student data appears in this report.</p>
       </section>
 
-      <ReportProof summary={summary} />
+      <ReportProof cohort={cohort} />
     </article>
   );
 }
