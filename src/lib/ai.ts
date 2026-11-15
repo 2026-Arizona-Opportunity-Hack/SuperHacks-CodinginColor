@@ -8,6 +8,7 @@ import { z } from "zod";
  *   OPENAI_BASE_URL   optional: e.g. https://ai.ohack.dev/v1 (OHack gateway) or another compatible host
  *   AI_MODEL          optional: defaults to gpt-4o-mini
  *   AI_DISABLE_THINKING=true  for Qwen-style hosts that "think" slowly by default
+ *   AI_MIN_TOKENS     optional: token floor per call (default 4000) so reasoning models have room to think
  * Without a key every AI feature degrades to a deterministic fallback, so the app never breaks.
  */
 export const aiEnabled = () => !!process.env.OPENAI_API_KEY;
@@ -45,12 +46,14 @@ export async function askJson<S extends z.ZodTypeAny>(schema: S, system: string,
       ]
     : user;
   let jsonMode = true; // some hosts reject response_format; drop it if so
+  let budget = Math.max(opts.maxTokens ?? 600, Number(process.env.AI_MIN_TOKENS) || 4000);
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const res = await ai().chat.completions.create({
         model: aiModel(),
         temperature: opts.temperature ?? 0.3,
-        max_tokens: opts.maxTokens ?? 600,
+        // Reasoning models spend tokens thinking before they answer; keep a floor so the answer isn't cut off.
+        max_tokens: budget,
         ...(jsonMode ? { response_format: { type: "json_object" } } : {}),
         messages: [
           { role: "system", content: system + "\n\nReply with only a JSON object." },
@@ -59,6 +62,10 @@ export async function askJson<S extends z.ZodTypeAny>(schema: S, system: string,
         ...(process.env.AI_DISABLE_THINKING === "true" ? { chat_template_kwargs: { enable_thinking: false } } : {}),
       } as OpenAI.ChatCompletionCreateParamsNonStreaming);
       const text = res.choices[0]?.message?.content ?? "";
+      if (!text.trim() && res.choices[0]?.finish_reason === "length") {
+        budget = Math.min(budget * 2, 16000); // the model spent its budget thinking; give it more room
+        continue;
+      }
       const parsed = schema.safeParse(extractJson(text));
       if (parsed.success) return parsed.data;
     } catch (e) {

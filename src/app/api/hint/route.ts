@@ -11,9 +11,9 @@ import { languageName } from "@/i18n/config";
 const Body = z.object({
   activityId: z.string().uuid(),
   code: z.string().max(20_000),
-  failedTest: z.string().max(300).optional(),
-  error: z.string().max(2000).optional(),
-  question: z.string().max(500).optional(),
+  failedTest: z.string().max(300).nullish(),
+  error: z.string().max(2000).nullish(),
+  question: z.string().max(500).nullish(),
 });
 
 /** Gives a Socratic hint and logs it as a struggle signal the teacher can review. */
