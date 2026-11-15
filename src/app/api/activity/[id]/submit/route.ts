@@ -3,7 +3,7 @@ import { z } from "zod";
 import { currentStudent, rateLimit } from "@/lib/auth";
 import { one, q } from "@/lib/db";
 import { gradeQuiz, isQuiz } from "@/lib/content";
-import { activityWithModule, canAccessModule, moduleActivities } from "@/lib/progress";
+import { activityWithModule, canAccessModule, moduleActivities, saveProgress } from "@/lib/progress";
 import { jsonError, readJson, sameOrigin } from "@/lib/http";
 
 const Body = z.object({
@@ -87,19 +87,11 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   }
 
   const keepBest = prev?.score != null && score != null ? Math.max(Number(prev.score), score) : (score ?? prev?.score ?? null);
-  await q(
-    `INSERT INTO progress (student_id, activity_id, status, score, answer, attempts, time_seconds, completed_at)
-     VALUES ($1, $2, $3, $4, $5, 1, $6, CASE WHEN $3 = 'completed' THEN now() END)
-     ON CONFLICT (student_id, activity_id) DO UPDATE SET
-       status = CASE WHEN progress.status = 'completed' THEN 'completed' ELSE EXCLUDED.status END,
-       score = $7, answer = coalesce(EXCLUDED.answer, progress.answer),
-       attempts = progress.attempts + 1, time_seconds = progress.time_seconds + EXCLUDED.time_seconds,
-       completed_at = coalesce(progress.completed_at, EXCLUDED.completed_at)`,
-    [student.id, id, completed ? "completed" : "started", score, answer == null ? null : JSON.stringify(answer), seconds, keepBest]
-  );
+  const { newlyCompleted } = await saveProgress(student.id, id, { completed, score, keepBest, answer, seconds });
 
   let xpGained = 0;
-  if (completed && !alreadyDone) {
+  // XP only for the write that actually completed the activity (exactly once, even under double-submits).
+  if (newlyCompleted) {
     xpGained = act.kind === "code" ? 30 : isQuiz(act.kind) && score === 100 ? 15 : 10;
     await q("UPDATE students SET xp = xp + $1, last_active = now() WHERE id = $2", [xpGained, student.id]);
   }

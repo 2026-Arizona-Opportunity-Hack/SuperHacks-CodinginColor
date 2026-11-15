@@ -140,3 +140,27 @@ export const BADGES = [
   { id: "streak-3", emoji: "🔥", label: "3-day streak", test: (s: { streak: number }) => s.streak >= 3 },
   { id: "grower", emoji: "📈", label: "+25 learning gain", test: (s: { bestGain: number }) => s.bestGain >= 25 },
 ] as const;
+
+/**
+ * Saves one submission. Returns whether THIS call is the one that completed the activity:
+ * completed_at is set once (coalesce), so it equals this transaction's now() only for the
+ * first completing write. Concurrent or repeated submissions can't award XP twice.
+ */
+export async function saveProgress(
+  studentId: string,
+  activityId: string,
+  p: { completed: boolean; score: number | null; keepBest: number | null; answer: unknown; seconds: number }
+): Promise<{ newlyCompleted: boolean }> {
+  const [row] = await q<{ newly: boolean }>(
+    `INSERT INTO progress (student_id, activity_id, status, score, answer, attempts, time_seconds, completed_at)
+     VALUES ($1, $2, $3, $4, $5, 1, $6, CASE WHEN $3 = 'completed' THEN now() END)
+     ON CONFLICT (student_id, activity_id) DO UPDATE SET
+       status = CASE WHEN progress.status = 'completed' THEN 'completed' ELSE EXCLUDED.status END,
+       score = $7, answer = coalesce(EXCLUDED.answer, progress.answer),
+       attempts = progress.attempts + 1, time_seconds = progress.time_seconds + EXCLUDED.time_seconds,
+       completed_at = coalesce(progress.completed_at, EXCLUDED.completed_at)
+     RETURNING (completed_at IS NOT NULL AND completed_at = now()) AS newly`,
+    [studentId, activityId, p.completed ? "completed" : "started", p.score, p.answer == null ? null : JSON.stringify(p.answer), p.seconds, p.keepBest]
+  );
+  return { newlyCompleted: p.completed && row?.newly === true };
+}
