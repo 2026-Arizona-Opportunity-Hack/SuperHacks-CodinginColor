@@ -186,6 +186,12 @@ export const fr: Dict = {
   "offline.queued": "Enregistré hors ligne. Ce sera vérifié au retour de la connexion.",
   "offline.synced": "{n} réponse(s) hors ligne synchronisée(s)",
 
+  "offline.button": "Hors ligne",
+  "offline.buttonReady": "Prêt hors ligne",
+  "offline.youreOffline": "Vous êtes hors ligne",
+  "offline.unsupportedShort": "Essayez sur le site en ligne",
+  "offline.updateHint": "Enregistré hors ligne. Touchez pour mettre à jour la copie.",
+
   "common.save": "Enregistrer",
   "common.cancel": "Annuler",
   "common.delete": "Supprimer",

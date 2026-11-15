@@ -197,6 +197,11 @@ export const en = {
   "offline.pending": "{n} answer(s) waiting to sync",
   "offline.queued": "Saved offline. It will be checked when you're back online.",
   "offline.synced": "Synced {n} answer(s) from offline",
+  "offline.button": "Offline",
+  "offline.buttonReady": "Offline ready",
+  "offline.youreOffline": "You're offline",
+  "offline.unsupportedShort": "Try on the live site",
+  "offline.updateHint": "Saved for offline. Tap to update the saved copy.",
   // common
   "common.save": "Save",
   "common.cancel": "Cancel",

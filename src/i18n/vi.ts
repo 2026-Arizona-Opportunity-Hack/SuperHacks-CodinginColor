@@ -186,6 +186,12 @@ export const vi: Dict = {
   "offline.queued": "Đã lưu ngoại tuyến. Sẽ được kiểm tra khi có mạng lại.",
   "offline.synced": "Đã đồng bộ {n} câu trả lời ngoại tuyến",
 
+  "offline.button": "Ngoại tuyến",
+  "offline.buttonReady": "Sẵn sàng ngoại tuyến",
+  "offline.youreOffline": "Bạn đang ngoại tuyến",
+  "offline.unsupportedShort": "Hãy thử trên trang chính thức",
+  "offline.updateHint": "Đã lưu ngoại tuyến. Chạm để cập nhật bản lưu.",
+
   "common.save": "Lưu",
   "common.cancel": "Hủy",
   "common.delete": "Xóa",

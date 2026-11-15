@@ -185,6 +185,12 @@ export const es: Dict = {
   "offline.queued": "Guardado sin conexión. Se revisará cuando vuelvas a conectarte.",
   "offline.synced": "Se sincronizaron {n} respuesta(s) hechas sin conexión",
 
+  "offline.button": "Sin conexión",
+  "offline.buttonReady": "Listo sin conexión",
+  "offline.youreOffline": "Sin internet",
+  "offline.unsupportedShort": "Pruébalo en el sitio publicado",
+  "offline.updateHint": "Guardado sin conexión. Toca para actualizar la copia.",
+
   "common.save": "Guardar",
   "common.cancel": "Cancelar",
   "common.delete": "Eliminar",

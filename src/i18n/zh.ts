@@ -185,6 +185,12 @@ export const zh: Dict = {
   "offline.queued": "已离线保存，联网后会进行检查。",
   "offline.synced": "已同步 {n} 个离线答案",
 
+  "offline.button": "离线",
+  "offline.buttonReady": "离线可用",
+  "offline.youreOffline": "你已离线",
+  "offline.unsupportedShort": "请在正式网站上使用",
+  "offline.updateHint": "已保存离线副本，点击更新。",
+
   "common.save": "保存",
   "common.cancel": "取消",
   "common.delete": "删除",

@@ -186,6 +186,12 @@ export const pt: Dict = {
   "offline.queued": "Salvo offline. Será verificado quando a conexão voltar.",
   "offline.synced": "{n} resposta(s) offline sincronizada(s)",
 
+  "offline.button": "Offline",
+  "offline.buttonReady": "Pronto offline",
+  "offline.youreOffline": "Você está offline",
+  "offline.unsupportedShort": "Tente no site publicado",
+  "offline.updateHint": "Salvo para offline. Toque para atualizar a cópia.",
+
   "common.save": "Salvar",
   "common.cancel": "Cancelar",
   "common.delete": "Excluir",

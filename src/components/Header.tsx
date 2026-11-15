@@ -6,6 +6,8 @@ import { signOut } from "@/app/actions/session";
 import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ReadingMode } from "./ReadingMode";
+import { OfflineButton } from "./OfflineButton";
+import { journey } from "@/lib/progress";
 
 export async function Header() {
   const [t, staff, student] = await Promise.all([getT(), currentStaff(), currentStudent()]);
@@ -16,6 +18,13 @@ export async function Header() {
   if (staff) links.push({ href: "/curriculum", label: t("nav.curriculum") });
   if (staff) links.push({ href: "/account", label: "Security" });
   links.push({ href: "/play", label: t("nav.playground") });
+
+  // What the Offline button downloads: a student's open lessons, plus the pages anyone needs offline.
+  const offlineUrls = ["/", "/join", "/play", "/offline"];
+  if (student) {
+    const mods = await journey(student);
+    offlineUrls.push("/learn", ...mods.filter((m) => m.state !== "locked" && m.state !== "not_assigned").map((m) => `/learn/m/${m.id}`));
+  }
 
   return (
     <header className="no-print sticky top-0 z-30 border-b border-line/70 bg-bg/80 backdrop-blur-md">
@@ -34,6 +43,7 @@ export async function Header() {
           ))}
         </nav>
         <div className="ms-auto flex items-center gap-2">
+          <OfflineButton urls={offlineUrls} />
           <LanguageSwitcher />
           <ReadingMode />
           {staff ? (
