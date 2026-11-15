@@ -25,7 +25,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   if (!sameOrigin(req)) return jsonError(403, "Bad origin");
   const student = await currentStudent();
   if (!student) return jsonError(401, "Join a class first");
-  if (!rateLimit(`submit:${student.id}`, 60, 60_000)) return jsonError(429, "Slow down a little");
+  if (!await rateLimit(`submit:${student.id}`, 60, 60_000)) return jsonError(429, "Slow down a little");
   const { id } = await params;
   if (!z.string().uuid().safeParse(id).success) return jsonError(400, "Bad id");
 

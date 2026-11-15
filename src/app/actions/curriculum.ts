@@ -33,7 +33,7 @@ export async function createBlankModule(title: string, concept: string): Promise
 export async function convertToModule(input: { text?: string; image?: string }): Promise<Result> {
   const u = await editor();
   if (!aiEnabled()) return { ok: false, error: "AI is not configured. Add OPENAI_API_KEY to .env to use the converter." };
-  if (!rateLimit(`convert:${u.id}`, 6, 10 * 60_000)) return { ok: false, error: "Too many conversions. Try again in a few minutes." };
+  if (!await rateLimit(`convert:${u.id}`, 6, 10 * 60_000)) return { ok: false, error: "Too many conversions. Try again in a few minutes." };
   const text = z.string().max(20_000).optional().parse(input.text);
   const image = input.image && /^data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+/=]+$/.test(input.image) && input.image.length < 6_000_000 ? input.image : undefined;
   if (!text?.trim() && !image) return { ok: false, error: "Paste the worksheet text or upload a photo of it." };
@@ -51,7 +51,7 @@ export async function translateToNewModule(moduleId: string, language: string): 
   if (!Uuid.safeParse(moduleId).success) return { ok: false, error: "Bad module" };
   const lang = z.enum(["Spanish", "Arabic", "French", "Hindi", "Vietnamese", "Chinese", "Portuguese"]).safeParse(language);
   if (!lang.success) return { ok: false, error: "Pick a language" };
-  if (!rateLimit(`translate:${u.id}`, 6, 10 * 60_000)) return { ok: false, error: "Too many translations. Try again in a few minutes." };
+  if (!await rateLimit(`translate:${u.id}`, 6, 10 * 60_000)) return { ok: false, error: "Too many translations. Try again in a few minutes." };
   const draft = await translateModule(moduleId, lang.data);
   if (!draft) return { ok: false, error: "Translation failed. Please try again." };
   const id = await insertModule(await firstCourse(), draft);

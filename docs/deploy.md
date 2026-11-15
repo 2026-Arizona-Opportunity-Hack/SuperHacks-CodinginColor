@@ -16,6 +16,8 @@ npx vercel env add OPENAI_API_KEY production     # optional
 npx vercel env add OPENAI_BASE_URL production    # optional, e.g. https://ai.ohack.dev/v1
 npx vercel env add AI_MODEL production           # optional
 npx vercel env add SOLANA_SECRET_KEY production  # optional
+npx vercel env add AUTH_SECRET production        # required: openssl rand -base64 32
+npx vercel env add REQUIRE_ADMIN_2FA production  # "true" for a real install
 npx vercel env add SEED_DEMO_DATA production     # "false" for a real install, "true" for a demo
 npx vercel env add SHOW_DEMO_ACCOUNTS production # "false" for a real install
 npx vercel deploy --prod

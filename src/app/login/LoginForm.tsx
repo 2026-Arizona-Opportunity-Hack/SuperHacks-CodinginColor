@@ -8,7 +8,8 @@ import { login, type FormState } from "@/app/actions/staff";
 export function LoginForm({ showDemo }: { showDemo: boolean }) {
   const t = useT();
   const [state, action, pending] = useActionState<FormState, FormData>(login, undefined);
-  const err = state?.error === "rate" ? t("login.tooMany") : state?.error ? t("login.failed") : "";
+  const err =
+    state?.error === "rate" ? t("login.tooMany") : state?.error === "locked" ? "This account is locked for 15 minutes after too many failed attempts." : state?.error ? t("login.failed") : "";
   return (
     <div className="mx-auto max-w-md pt-6">
       <form action={action} className="card space-y-4 p-6 sm:p-8">
@@ -20,7 +21,7 @@ export function LoginForm({ showDemo }: { showDemo: boolean }) {
           <label className="label" htmlFor="email">
             {t("login.email")}
           </label>
-          <input id="email" name="email" type="email" autoComplete="username" required className="input" />
+          <input id="email" name="email" type="email" autoComplete="username" required className="input" defaultValue={state?.values?.email ?? ""} key={state?.values?.email} />
         </div>
         <div>
           <label className="label" htmlFor="password">

@@ -1,7 +1,7 @@
 "use client";
 import { useTransition } from "react";
-import { Check, MoreHorizontal } from "lucide-react";
-import { releaseSeat, removeStudent, resolveHand, setModuleAssigned } from "@/app/actions/teach";
+import { Check, Lock, LockOpen, MoreHorizontal } from "lucide-react";
+import { releaseSeat, removeStudent, resolveHand, setJoinOpen, setModuleAssigned } from "@/app/actions/teach";
 
 export function ModuleToggle({ classId, moduleId, label, assigned }: { classId: string; moduleId: string; label: string; assigned: boolean }) {
   const [pending, start] = useTransition();
@@ -42,5 +42,14 @@ export function StudentActions({ classId, studentId, name }: { classId: string; 
         </button>
       </div>
     </details>
+  );
+}
+
+export function JoinLock({ classId, open }: { classId: string; open: boolean }) {
+  const [pending, start] = useTransition();
+  return (
+    <button className={`btn-ghost ${open ? "" : "!border-warn !text-warn"}`} aria-pressed={!open} disabled={pending} onClick={() => start(() => setJoinOpen(classId, !open))} title={open ? "Stop new students from joining with the code" : "Allow new students to join with the code"}>
+      {open ? <LockOpen className="h-4 w-4" aria-hidden /> : <Lock className="h-4 w-4" aria-hidden />} {open ? "Joining open" : "Joining locked"}
+    </button>
   );
 }

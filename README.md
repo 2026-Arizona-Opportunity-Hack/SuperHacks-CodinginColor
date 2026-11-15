@@ -116,6 +116,8 @@ npm run db:reset       # wipe the local database (re-seeded on next start)
 | `AI_DISABLE_THINKING` | Qwen-style hosts | `true` to skip slow "thinking" mode |
 | `SOLANA_SECRET_KEY` | Anchoring certificates/reports on-chain | Empty → proofs are hashed but not anchored. Devnet key is fine. |
 | `SOLANA_RPC_URL` | Solana cluster | `https://api.devnet.solana.com` |
+| `AUTH_SECRET` | Encrypting 2FA secrets at rest | **Required in production**: a long random string (`openssl rand -base64 32`) |
+| `REQUIRE_ADMIN_2FA` | Force admins to use two-step verification | `false`; set `true` for a real install |
 | `SEED_DEMO_DATA` | Demo data on an empty database | `true`; set `false` for a real install |
 | `DEMO_PASSWORD` | Password of seeded staff accounts | `cic-demo-2026` |
 | `SHOW_DEMO_ACCOUNTS` | Demo-account hint on the sign-in page | `true`; set `false` in production |

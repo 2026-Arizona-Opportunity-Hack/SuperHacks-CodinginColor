@@ -131,3 +131,11 @@ export async function reteachPlan(classId: string, concept: string) {
   await guard(classId);
   return buildPlan(classId, z.string().trim().max(40).parse(concept));
 }
+
+/** Lock or unlock the class to new joiners (returning students can always use their resume code). */
+export async function setJoinOpen(classId: string, open: boolean) {
+  const user = await guard(classId);
+  await q("UPDATE classes SET join_open = $1 WHERE id = $2", [open === true, classId]);
+  await audit(user.email, open ? "class_join_open" : "class_join_locked", classId);
+  revalidatePath(`/teach/${classId}`);
+}

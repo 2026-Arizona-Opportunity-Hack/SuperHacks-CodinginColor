@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { headers } from "next/headers";
 import { getLocale, getT } from "@/i18n/server";
 import { dirOf } from "@/i18n/config";
 import { I18nProvider } from "@/i18n/client";
@@ -26,10 +27,11 @@ const prefsScript = `try{var p=JSON.parse(localStorage.getItem('cic_prefs')||'{}
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
   const t = await getT();
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <html lang={locale} dir={dirOf(locale)} className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: prefsScript }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: prefsScript }} />
       </head>
       <body className="min-h-screen font-sans">
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:start-3 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-brand-ink">

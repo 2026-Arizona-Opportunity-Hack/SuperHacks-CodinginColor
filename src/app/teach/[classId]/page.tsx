@@ -11,7 +11,7 @@ import { classRoster, conceptHeat, gainRows, summarize } from "@/lib/stats";
 import { LiveRefresh } from "./LiveRefresh";
 import { ReteachCard } from "./ReteachCard";
 import { RosterImport } from "./RosterImport";
-import { ModuleToggle, StudentActions, ResolveHand } from "./ClassControls";
+import { JoinLock, ModuleToggle, StudentActions, ResolveHand } from "./ClassControls";
 
 export const metadata: Metadata = { title: "Class dashboard" };
 
@@ -72,6 +72,7 @@ export default async function ClassPage({ params, searchParams }: { params: Prom
         </div>
         <div className="flex flex-wrap items-center gap-2 no-print">
           <LiveRefresh />
+          <JoinLock classId={classId} open={cls.join_open} />
           <a href={`/teach/${classId}/gradebook`} className="btn-ghost" download>
             <Download className="h-4 w-4" aria-hidden /> Gradebook CSV
           </a>
