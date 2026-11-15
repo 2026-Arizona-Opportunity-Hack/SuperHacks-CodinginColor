@@ -48,6 +48,11 @@ export default async function Home() {
             <br />
             <SplitWords text={t("landing.title2")} delay={0.3} className="text-shimmer bg-gradient-to-r from-brand via-accent to-brand bg-clip-text text-transparent" />
           </h1>
+          {/* Walking crowd at full size, right under the headline: every student, any background. Decorative only. */}
+          <div aria-hidden className="relative left-1/2 mt-6 h-[300px] w-screen -translate-x-1/2 overflow-hidden sm:h-[400px]">
+            <CrowdCanvas exclude={[17, 72, 92, 100]} scale={0.85} className="absolute inset-0 h-full w-full" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-bg to-transparent" />
+          </div>
           <Reveal delay={0.1}>
             <p className="mx-auto mt-5 max-w-xl text-lg text-muted">{t("landing.subtitle")}</p>
           </Reveal>
@@ -91,11 +96,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Walking crowd at full size: every student, any background. Full-bleed band; decorative only. */}
-      <div aria-hidden className="relative left-1/2 h-[360px] w-screen -translate-x-1/2 overflow-hidden sm:h-[460px]">
-        <CrowdCanvas exclude={[17, 72, 92, 100]} scale={0.85} className="absolute inset-0 h-full w-full" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-bg to-transparent" />
-      </div>
 
       <section className="mt-24" aria-labelledby="how">
         <Reveal>
