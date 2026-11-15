@@ -71,12 +71,18 @@ export function Player({
     async (payload: Record<string, unknown>): Promise<SubmitResponse> => {
       const seconds = Math.round((Date.now() - shownAt.current) / 1000);
       shownAt.current = Date.now();
-      const res = await fetch(`/api/activity/${current.id}/submit`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...payload, seconds }),
-      });
-      const data = (await res.json()) as SubmitResponse;
+      let res: Response;
+      try {
+        res = await fetch(`/api/activity/${current.id}/submit`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...payload, seconds }),
+        });
+      } catch {
+        // Offline: drafts are already saved on this device; ask the student to resubmit when back online.
+        return { completed: false, score: null, nextActivityId: null, moduleComplete: false, gain: null, error: "You're offline. Your work is saved on this device: press Submit again when you're back online." };
+      }
+      const data = (await res.json().catch(() => ({ error: "Something went wrong. Please try again." }))) as SubmitResponse;
       if (!res.ok) return { ...data, completed: false } as SubmitResponse;
       if (data.completed || data.alreadyDone) {
         setActs((list) => {
