@@ -32,7 +32,7 @@ export default async function Home() {
     <div className="relative">
       <div className="mesh lite-hide pointer-events-none absolute inset-x-[-20%] top-[-120px] -z-10 h-[620px]" aria-hidden />
 
-      <section className="relative flex flex-col items-center pb-6 pt-6 text-center lg:pt-14">
+      <section className="relative flex flex-col items-center pb-6 pt-0 text-center lg:pt-2">
         <Spotlight />
         <FloatingCode />
         <div className="relative mx-auto max-w-3xl">
@@ -43,13 +43,13 @@ export default async function Home() {
               {t("landing.badge")}
             </span>
           </Reveal>
-          <h1 className="h-display mt-4 text-5xl leading-[1.05] sm:text-7xl">
+          <h1 className="h-display mt-3 text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
             <SplitWords text={t("landing.title1")} delay={0.05} />
             <br />
             <SplitWords text={t("landing.title2")} delay={0.3} className="text-shimmer bg-gradient-to-r from-brand via-accent to-brand bg-clip-text text-transparent" />
           </h1>
           {/* Walking crowd at full size, right under the headline: every student, any background. Decorative only. */}
-          <div aria-hidden className="relative left-1/2 mt-6 h-[300px] w-screen -translate-x-1/2 overflow-hidden sm:h-[400px]">
+          <div aria-hidden className="relative left-1/2 mt-2 h-[280px] w-screen -translate-x-1/2 overflow-hidden sm:h-[clamp(260px,calc(100svh-384px),380px)]">
             <CrowdCanvas exclude={[17, 72, 92, 100]} scale={0.85} className="absolute inset-0 h-full w-full" />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-bg to-transparent" />
           </div>
