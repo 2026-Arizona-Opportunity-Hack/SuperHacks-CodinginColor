@@ -6,7 +6,8 @@ import { contentSchemaFor, QuestionSchema, type ActivityKind } from "./content";
 import type { StaffUser } from "./auth";
 
 /** Who may edit CIC's curriculum: CIC admins and CIC's own instructors (not partner teachers or reviewers). */
-export const canEditCurriculum = (u: StaffUser | null) => !!u && (u.role === "admin" || (u.role === "instructor" && u.organization === "Coding in Color"));
+/** Admins, plus instructors an admin has made curriculum editors. The self-declared organization is never trusted. */
+export const canEditCurriculum = (u: Pick<StaffUser, "role" | "curriculum_editor"> | null) => !!u && (u.role === "admin" || (u.role === "instructor" && u.curriculum_editor === true));
 
 export const TEMPLATE: { lesson: string; kind: ActivityKind; title: string }[] = [
   { lesson: "Warm-up", kind: "pretest", title: "What do you already know?" },

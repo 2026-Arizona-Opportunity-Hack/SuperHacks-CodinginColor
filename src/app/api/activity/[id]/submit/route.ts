@@ -14,6 +14,7 @@ const Body = z.object({
   passed: z.boolean().optional(),
   failedTest: z.string().max(200).optional(),
   error: z.string().max(2000).optional(),
+  asStudent: z.string().uuid().optional(), // set by the offline outbox: who actually did this work
 });
 
 /**
@@ -35,6 +36,9 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   } catch {
     return jsonError(400, "Invalid submission");
   }
+
+  // Offline work queued on a shared device must not be filed under whoever is signed in now.
+  if (body.asStudent && body.asStudent !== student.id) return jsonError(409, "wrong_student");
 
   const act = await activityWithModule(id);
   if (!act || !(await canAccessModule(student, act.module_id))) return jsonError(403, "This module is locked");

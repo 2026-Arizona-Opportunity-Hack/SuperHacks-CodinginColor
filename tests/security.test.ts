@@ -51,3 +51,12 @@ test("rate limiter is shared through the database", async () => {
   for (let i = 0; i < 4; i++) results.push(await rateLimit(key, 3, 60_000));
   assert.deepEqual(results, [true, true, true, false]);
 });
+
+test("curriculum editing needs an explicit grant, not a self-declared organization", async () => {
+  const { canEditCurriculum } = await import("@/lib/curriculum");
+  assert.equal(canEditCurriculum({ role: "instructor", curriculum_editor: false }), false); // e.g. self-signed-up "Coding in Color"
+  assert.equal(canEditCurriculum({ role: "reviewer", curriculum_editor: true }), false);
+  assert.equal(canEditCurriculum({ role: "instructor", curriculum_editor: true }), true);
+  assert.equal(canEditCurriculum({ role: "admin", curriculum_editor: false }), true);
+  assert.equal(canEditCurriculum(null), false);
+});

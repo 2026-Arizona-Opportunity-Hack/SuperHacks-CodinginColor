@@ -63,3 +63,10 @@ test("a completion counts once: repeated and simultaneous submits don't re-award
   assert.equal(row!.status, "completed");
   assert.equal(row!.attempts, 4);
 });
+
+test("sign-up can't grant curriculum edit rights; only the seeded CIC editor has them", async () => {
+  const editors = await q("SELECT email FROM users WHERE curriculum_editor ORDER BY email");
+  assert.deepEqual(editors.map((r) => r.email), ["instructor@codingincolor.org"]);
+  const [u] = await q("INSERT INTO users (email, name, password_hash, role, organization) VALUES ('fake@x.org', 'Fake', 'x', 'instructor', 'Coding in Color') RETURNING curriculum_editor");
+  assert.equal(u.curriculum_editor, false);
+});

@@ -32,10 +32,10 @@ export default async function Home() {
     <div className="relative">
       <div className="mesh lite-hide pointer-events-none absolute inset-x-[-20%] top-[-120px] -z-10 h-[620px]" aria-hidden />
 
-      <section className="relative grid items-center gap-10 pb-10 pt-6 lg:grid-cols-[1.1fr_1fr] lg:pt-14">
+      <section className="relative flex flex-col items-center pb-6 pt-6 text-center lg:pt-14">
         <Spotlight />
         <FloatingCode />
-        <div>
+        <div className="relative mx-auto max-w-3xl">
           <Reveal>
             <span className="chip gap-2 bg-brand/10 py-1 ps-1 text-brand">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -43,16 +43,16 @@ export default async function Home() {
               {t("landing.badge")}
             </span>
           </Reveal>
-          <h1 className="h-display mt-4 text-4xl leading-[1.05] sm:text-6xl">
+          <h1 className="h-display mt-4 text-5xl leading-[1.05] sm:text-7xl">
             <SplitWords text={t("landing.title1")} delay={0.05} />
             <br />
             <SplitWords text={t("landing.title2")} delay={0.3} className="text-shimmer bg-gradient-to-r from-brand via-accent to-brand bg-clip-text text-transparent" />
           </h1>
           <Reveal delay={0.1}>
-            <p className="mt-5 max-w-xl text-lg text-muted">{t("landing.subtitle")}</p>
+            <p className="mx-auto mt-5 max-w-xl text-lg text-muted">{t("landing.subtitle")}</p>
           </Reveal>
           <Reveal delay={0.15}>
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Magnetic>
                 <Link href="/join" className="btn-primary !min-h-[52px] !px-6 text-base shadow-[0_10px_30px_-10px_rgb(var(--brand)/.7)]">
                   {t("landing.ctaStudent")} <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden />
@@ -66,7 +66,7 @@ export default async function Home() {
             </div>
           </Reveal>
           <Reveal delay={0.2}>
-            <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4">
+            <dl className="mx-auto mt-10 grid max-w-lg grid-cols-3 gap-4">
               <div>
                 <dt className="sr-only">{t("landing.stat1")}</dt>
                 <dd className="h-display text-3xl text-good" dir="ltr">
@@ -89,12 +89,13 @@ export default async function Home() {
             </dl>
           </Reveal>
         </div>
-        {/* Walking crowd: every student, any background. Decorative only. */}
-        <div aria-hidden className="relative h-[300px] overflow-hidden rounded-3xl border border-line bg-raised/40 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] sm:h-[380px]">
-          <CrowdCanvas exclude={[17, 72, 92, 100]} scale={0.85} className="absolute inset-0 h-full w-full" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-bg to-transparent" />
-        </div>
       </section>
+
+      {/* Walking crowd at full size: every student, any background. Full-bleed band; decorative only. */}
+      <div aria-hidden className="relative left-1/2 h-[360px] w-screen -translate-x-1/2 overflow-hidden sm:h-[460px]">
+        <CrowdCanvas exclude={[17, 72, 92, 100]} scale={0.85} className="absolute inset-0 h-full w-full" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-bg to-transparent" />
+      </div>
 
       <section className="mt-24" aria-labelledby="how">
         <Reveal>
@@ -146,7 +147,7 @@ export default async function Home() {
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg font-medium text-muted sm:text-xl">{t("landing.crowdBody")}</p>
         </div>
-        <div className="mx-auto mt-12 max-w-xl px-2 pb-20 text-start">
+        <div className="mx-auto mt-10 max-w-2xl px-2 pb-10 text-start">
           <HeroCode students={students} />
         </div>
       </section>

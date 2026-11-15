@@ -45,6 +45,7 @@ export default async function ModulePage({ params, searchParams }: { params: Pro
       activities={activities}
       startId={(requested ?? firstOpen).id}
       nextModuleId={nextModule?.id ?? null}
+      studentId={student.id}
     />
   );
 }

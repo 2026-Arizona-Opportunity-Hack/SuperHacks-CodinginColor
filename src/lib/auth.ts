@@ -12,7 +12,7 @@ import { one, q } from "./db";
  */
 
 export type Role = "admin" | "instructor" | "reviewer";
-export type StaffUser = { id: string; email: string; name: string; role: Role; organization: string; totp_enabled: boolean };
+export type StaffUser = { id: string; email: string; name: string; role: Role; organization: string; totp_enabled: boolean; curriculum_editor: boolean };
 export type Student = { id: string; class_id: string; display_name: string; resume_code: string; xp: number };
 
 // In production the __Host- prefix makes the browser enforce Secure, Path=/ and no Domain,
@@ -61,7 +61,7 @@ export async function currentStaff(): Promise<StaffUser | null> {
   const token = (await cookies()).get(STAFF_COOKIE)?.value;
   if (!token) return null;
   return one<StaffUser>(
-    `SELECT u.id, u.email, u.name, u.role, u.organization, u.totp_enabled FROM sessions s JOIN users u ON u.id = s.user_id
+    `SELECT u.id, u.email, u.name, u.role, u.organization, u.totp_enabled, u.curriculum_editor FROM sessions s JOIN users u ON u.id = s.user_id
      WHERE s.token_hash = $1 AND s.expires_at > now()`,
     [sha256(token)]
   );
