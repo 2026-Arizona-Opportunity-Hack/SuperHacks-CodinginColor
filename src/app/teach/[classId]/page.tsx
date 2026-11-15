@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import QRCode from "qrcode";
 import { z } from "zod";
-import { AlertTriangle, CheckCircle2, Clock, Hand, Lightbulb, Printer, TrendingUp, UserX } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Clock, Download, Hand, Lightbulb, Printer, TrendingUp, UserX } from "lucide-react";
 import { canManageClass, requireStaff } from "@/lib/auth";
 import { one, q } from "@/lib/db";
 import { classRoster, conceptHeat, gainRows, summarize } from "@/lib/stats";
@@ -72,6 +72,9 @@ export default async function ClassPage({ params, searchParams }: { params: Prom
         </div>
         <div className="flex flex-wrap items-center gap-2 no-print">
           <LiveRefresh />
+          <a href={`/teach/${classId}/gradebook`} className="btn-ghost" download>
+            <Download className="h-4 w-4" aria-hidden /> Gradebook CSV
+          </a>
           <Link href={`/teach/${classId}/codes`} className="btn-ghost">
             <Printer className="h-4 w-4" aria-hidden /> Print resume codes
           </Link>

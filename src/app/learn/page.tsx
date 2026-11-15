@@ -6,9 +6,12 @@ import { currentStudent } from "@/lib/auth";
 import { one, q } from "@/lib/db";
 import { BADGES, journey, streakDays } from "@/lib/progress";
 import { getT } from "@/i18n/server";
-import { switchStudent } from "@/app/actions/session";
+import { SwitchStudent } from "./SwitchStudent";
 import { JourneyPath } from "./JourneyPath";
 import { LeaderboardToggle } from "./LeaderboardToggle";
+import { CertificateCard } from "./CertificateCard";
+import { FamilyCard } from "./FamilyCard";
+import { myCertificate } from "@/app/actions/proofs";
 
 export const metadata: Metadata = { title: "My journey" };
 
@@ -33,6 +36,8 @@ export default async function LearnPage() {
     ),
   ]);
   await q("UPDATE students SET last_active = now() WHERE id = $1", [student.id]);
+  const certId = await myCertificate();
+  const familyOn = !!(await one("SELECT 1 FROM family_links WHERE student_id = $1 AND revoked_at IS NULL", [student.id]));
   const hidden = (await one("SELECT hide_from_leaderboard AS h FROM students WHERE id = $1", [student.id]))?.h ?? false;
 
   const modulesDone = modules.filter((m) => m.state === "done").length;
@@ -88,6 +93,7 @@ export default async function LearnPage() {
       </section>
 
       <aside className="space-y-4">
+        <CertificateCard existingId={certId} eligible={assignedAhead > 0 && modules.filter((m) => m.state !== "not_assigned").every((m) => m.state === "done" || m.state === "tested_out")} />
         <div className="card grid grid-cols-2 gap-3 p-5">
           <div>
             <p className="flex items-center gap-1 text-2xl font-extrabold">
@@ -146,9 +152,9 @@ export default async function LearnPage() {
           <p className="mt-1 text-xs text-muted">{t("learn.resumeCodeHelp")}</p>
         </div>
 
-        <form action={switchStudent}>
-          <button className="text-sm text-muted underline">{t("learn.leave")}</button>
-        </form>
+        <FamilyCard active={familyOn} />
+
+        <SwitchStudent label={t("learn.leave")} />
       </aside>
     </div>
   );

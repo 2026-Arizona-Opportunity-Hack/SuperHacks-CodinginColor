@@ -43,9 +43,10 @@ async function connect(): Promise<Db> {
     exec = (sql) => pool.query(sql);
   } else {
     const { PGlite } = await import("@electric-sql/pglite");
-    const dir = path.join(process.cwd(), ".data", "pglite");
-    fs.mkdirSync(dir, { recursive: true });
-    const lite = new PGlite(dir);
+    // PGLITE_DIR=memory gives a throwaway in-memory database (used by the test suite).
+    const dir = process.env.PGLITE_DIR === "memory" ? undefined : process.env.PGLITE_DIR || path.join(process.cwd(), ".data", "pglite");
+    if (dir) fs.mkdirSync(dir, { recursive: true });
+    const lite = dir ? new PGlite(dir) : new PGlite();
     database = { query: async (sql, params) => (await lite.query(sql, params as any[])).rows as any[] };
     exec = (sql) => lite.exec(sql);
   }
