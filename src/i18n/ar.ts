@@ -185,6 +185,12 @@ export const ar: Dict = {
   "offline.queued": "حُفظ دون اتصال. سيُفحص عند عودة الاتصال.",
   "offline.synced": "تمت مزامنة {n} إجابة من وضع عدم الاتصال",
 
+  "offline.button": "دون اتصال",
+  "offline.buttonReady": "جاهز دون اتصال",
+  "offline.youreOffline": "أنت غير متصل",
+  "offline.unsupportedShort": "جرّبه على الموقع المنشور",
+  "offline.updateHint": "محفوظ للاستخدام دون اتصال. انقر لتحديث النسخة.",
+
   "common.save": "حفظ",
   "common.cancel": "إلغاء",
   "common.delete": "حذف",

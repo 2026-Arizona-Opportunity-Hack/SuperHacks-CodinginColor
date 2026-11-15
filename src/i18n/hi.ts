@@ -186,6 +186,12 @@ export const hi: Dict = {
   "offline.queued": "ऑफ़लाइन सेव हुआ। इंटरनेट लौटने पर जाँचा जाएगा।",
   "offline.synced": "ऑफ़लाइन के {n} जवाब सिंक हो गए",
 
+  "offline.button": "ऑफ़लाइन",
+  "offline.buttonReady": "ऑफ़लाइन तैयार",
+  "offline.youreOffline": "आप ऑफ़लाइन हैं",
+  "offline.unsupportedShort": "लाइव साइट पर आज़माएँ",
+  "offline.updateHint": "ऑफ़लाइन के लिए सेव है। कॉपी अपडेट करने के लिए टैप करें।",
+
   "common.save": "सेव करें",
   "common.cancel": "रद्द करें",
   "common.delete": "हटाएँ",
