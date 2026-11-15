@@ -30,6 +30,8 @@ const securityHeaders = [
 export default {
   outputFileTracingRoot: import.meta.dirname,
   poweredByHeader: false,
+  // Worksheet photos for the AI converter are sent to a server action as data URLs.
+  experimental: { serverActions: { bodySizeLimit: "6mb" } },
   serverExternalPackages: ["@electric-sql/pglite", "pg"],
   outputFileTracingIncludes: { "/**": ["./db/schema.sql"] },
   async headers() {
