@@ -48,6 +48,8 @@ spreadsheets. CIC Learn replaces that with a link a teacher can share on Monday.
 - **Stuck map + "reteach tomorrow".** Every failed run and hint becomes a struggle signal tagged with a concept. Teachers see "6/15 struggled with loops" and get a one-click 5-minute warm-up built from their class's actual mistakes.
 - **Socratic AI hints that never give the answer**, enforced three ways: prompt rules, a check that rejects any hint containing a line of the solution, and a rule-based fallback. Students can ask by voice and have hints read aloud. Every hint is visible to the teacher.
 - **Worksheet → module (AI).** Paste a worksheet or upload a photo of one; AI drafts the whole module (slides, quiz, worksheet, auto-graded exercise, pre/post tests) for an instructor to review and publish. AI translation creates a draft copy in another language without touching code or answer keys.
+- **CIC Helper chatbot**: a small button on every page that answers *how do I…?* questions in the visitor's language, using only the platform's own guides. It refuses to do students' exercises (it points them to the Socratic hint button) and stores no conversations.
+- **Offline mode**: *Save for offline* downloads a student's lessons and the Python runtime; work submitted without internet waits in an on-device outbox and syncs automatically (the server still grades and enforces unlock order).
 - **No-login Python playground** (`/play`) with share links for camps on locked-down lab machines.
 - **Verifiable certificates and funder reports.** Only a SHA-256 fingerprint is recorded on Solana. Names and scores never go on-chain. Anyone can check `/verify/<id>`.
 - **Funder report**: a printable one-pager with learning gain by concept and class.

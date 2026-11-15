@@ -16,8 +16,9 @@ export function QuizView({ activity, submit, onContinue, isLast }: ViewProps) {
   const [score, setScore] = useState<number | null>(activity.completed ? activity.score : null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [queued, setQueued] = useState(false);
   const isAssessment = activity.kind === "pretest" || activity.kind === "posttest";
-  const showResult = graded || (activity.completed && isAssessment);
+  const showResult = graded || queued || (activity.completed && isAssessment);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -30,6 +31,10 @@ export function QuizView({ activity, submit, onContinue, isLast }: ViewProps) {
     const r = await submit({ answers });
     setBusy(false);
     if (r.error) return setError(r.error);
+    if (r.queued) {
+      setQueued(true);
+      return;
+    }
     setScore(r.score);
     if (r.result) setGraded(r.result);
   }
@@ -90,7 +95,8 @@ export function QuizView({ activity, submit, onContinue, isLast }: ViewProps) {
           </button>
         ) : (
           <>
-            {score != null && <p className="font-bold">{t("player.score", { score: Math.round(score) })}</p>}
+            {queued && <p className="font-semibold text-warn">{t("offline.queued")}</p>}
+            {score != null && !queued && <p className="font-bold">{t("player.score", { score: Math.round(score) })}</p>}
             {!isAssessment && graded && graded.score < 100 && (
               <button type="button" className="btn-ghost" onClick={() => (setGraded(null), setAnswers({}))}>
                 {t("player.tryAgain")}

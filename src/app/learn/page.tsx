@@ -12,6 +12,7 @@ import { JourneyPath } from "./JourneyPath";
 import { LeaderboardToggle } from "./LeaderboardToggle";
 import { CertificateCard } from "./CertificateCard";
 import { FamilyCard } from "./FamilyCard";
+import { SaveOffline } from "./SaveOffline";
 import { myCertificate } from "@/app/actions/proofs";
 
 export const metadata: Metadata = { title: "My journey" };
@@ -152,6 +153,8 @@ export default async function LearnPage() {
           <p className="mt-2 font-mono text-2xl tracking-[0.3em]">{student.resume_code}</p>
           <p className="mt-1 text-xs text-muted">{t("learn.resumeCodeHelp")}</p>
         </div>
+
+        <SaveOffline moduleIds={modules.filter((m) => m.state !== "locked" && m.state !== "not_assigned").map((m) => m.id)} />
 
         <FamilyCard active={familyOn} />
 

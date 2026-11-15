@@ -60,5 +60,6 @@ never reveal which answers were right.
 **Does the AI just give students the code?** No. Hints are guiding questions. Any hint that contains a line
 of the solution is thrown away and replaced with a safe one. You can read every hint on your dashboard.
 
-**What if the internet is slow?** After one visit, Python and the playground work offline, and students can
-turn on *Lite mode* from the accessibility menu.
+**What if the internet is slow or drops?** Before class (on good Wi-Fi) have students press **Save for offline** on their journey page. Lessons and Python then work without internet, answers wait on the device and sync automatically when the connection returns. Students can also turn on *Lite mode* from the accessibility menu.
+
+**Students keep asking how to do things?** Point them to the round **CIC Helper** button in the corner: it answers how-to questions in their language (but never does their exercises).

@@ -7,6 +7,8 @@ import { dirOf } from "@/i18n/config";
 import { I18nProvider } from "@/i18n/client";
 import { Header } from "@/components/Header";
 import { OfflineSupport } from "@/components/OfflineSupport";
+import { OfflineSync } from "@/components/OfflineSync";
+import { HelperChat } from "@/components/HelperChat";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { ScrollProgress } from "@/components/motion/Effects";
 
@@ -47,6 +49,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {children}
           </main>
           <OfflineSupport />
+          <OfflineSync />
+          <HelperChat />
         </I18nProvider>
         </MotionProvider>
       </body>
