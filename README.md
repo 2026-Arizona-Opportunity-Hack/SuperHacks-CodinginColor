@@ -144,7 +144,7 @@ tests/                        node:test suites (npm test)
 ## Team
 
 - Onkar (https://github.com/onkarf1) — AI Fullstack Engineer
-- Puneet Kumar (https://github.com/Pun33t-B0kk4) — Backend, code review and merges
+- Puneet Kumar (https://github.com/Pun33t-B0kk4) — Backend
 - Karthik — Frontend (inactive)
 
 ## Links
