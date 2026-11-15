@@ -45,11 +45,14 @@ export function Player({
   activities: initial,
   startId,
   nextModuleId,
+  studentId,
 }: {
   module: { id: string; title: string; position: number };
   activities: PlayerActivity[];
   startId: string;
   nextModuleId: string | null;
+  /** Owner of any work queued offline, so a shared device never sends it as someone else. */
+  studentId: string;
 }) {
   const t = useT();
   const router = useRouter();
@@ -84,7 +87,7 @@ export function Player({
       } catch {
         // Offline: keep the work in the outbox (sent automatically when back online) and let the
         // student carry on. The server re-checks order and grades quizzes when it arrives.
-        queueSubmission(current.id, { ...payload, seconds });
+        queueSubmission(current.id, { ...payload, seconds }, studentId);
         const idx = acts.findIndex((a) => a.id === current.id);
         setActs((list) => {
           let open = true;

@@ -3,8 +3,10 @@
 /**
  * Offline outbox: work submitted without internet is kept on this device (localStorage) and
  * sent in order when the connection returns. The server still grades and enforces unlock order.
+ * Each item records the student who did the work; on a shared device the server refuses to
+ * file it under whoever is signed in now, and the item waits until its owner signs back in.
  */
-export type OutboxItem = { activityId: string; payload: Record<string, unknown>; at: number };
+export type OutboxItem = { activityId: string; payload: Record<string, unknown>; at: number; owner?: string };
 const KEY = "cic_outbox";
 
 export function readOutbox(): OutboxItem[] {
@@ -20,9 +22,9 @@ function writeOutbox(items: OutboxItem[]) {
   } catch {}
   window.dispatchEvent(new Event("cic-outbox"));
 }
-export function queueSubmission(activityId: string, payload: Record<string, unknown>) {
-  // Keep only the latest attempt per activity.
-  writeOutbox([...readOutbox().filter((i) => i.activityId !== activityId), { activityId, payload, at: Date.now() }]);
+export function queueSubmission(activityId: string, payload: Record<string, unknown>, owner: string) {
+  // Keep only the latest attempt per activity per student.
+  writeOutbox([...readOutbox().filter((i) => !(i.activityId === activityId && i.owner === owner)), { activityId, payload, at: Date.now(), owner }]);
 }
 
 let flushing = false;
@@ -35,10 +37,13 @@ export async function flushOutbox(): Promise<{ sent: number; dropped: number }> 
     for (const item of readOutbox().sort((a, b) => a.at - b.at)) {
       let res: Response;
       try {
-        res = await fetch(`/api/activity/${item.activityId}/submit`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(item.payload) });
+        const body = item.owner ? { ...item.payload, asStudent: item.owner } : item.payload;
+        res = await fetch(`/api/activity/${item.activityId}/submit`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       } catch {
         break; // still offline
       }
+      // Someone else is signed in on this device: keep the work for its owner.
+      if (res.status === 409 && (await res.clone().json().catch(() => null))?.error === "wrong_student") continue;
       // Accepted, or permanently rejected (e.g. locked): either way it leaves the outbox.
       if (res.ok) sent++;
       else if (res.status < 500) dropped++;
