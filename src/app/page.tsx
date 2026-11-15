@@ -89,7 +89,11 @@ export default async function Home() {
             </dl>
           </Reveal>
         </div>
-        <HeroCode students={students} />
+        {/* Walking crowd: every student, any background. Decorative only. */}
+        <div aria-hidden className="relative h-[300px] overflow-hidden rounded-3xl border border-line bg-raised/40 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] sm:h-[380px]">
+          <CrowdCanvas exclude={[17, 72, 92, 100]} scale={0.85} className="absolute inset-0 h-full w-full" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-bg to-transparent" />
+        </div>
       </section>
 
       <section className="mt-24" aria-labelledby="how">
@@ -134,16 +138,17 @@ export default async function Home() {
         </Reveal>
       </section>
 
-      {/* Walking crowd: every student, any background. Full-bleed band; decorative only. */}
-      <section aria-labelledby="crowd" className="relative left-1/2 mt-24 h-[560px] w-screen -translate-x-1/2 overflow-hidden sm:h-[680px]">
+      {/* The loops.py demo: a student's code fails, gets a Socratic hint, passes, and the next module unlocks. */}
+      <section aria-labelledby="crowd" className="relative mt-24">
         <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
           <h2 id="crowd" className="h-display text-balance text-5xl font-black leading-[1.02] tracking-tight sm:text-7xl">
             <SplitWords whenVisible text={t("landing.crowdTitle")} className="text-shimmer bg-gradient-to-r from-ink via-brand to-ink bg-clip-text text-transparent" />
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg font-medium text-muted sm:text-xl">{t("landing.crowdBody")}</p>
         </div>
-        <CrowdCanvas exclude={[17, 72, 92, 100]} scale={0.85} className="absolute inset-x-0 bottom-0 h-[360px] w-full sm:h-[460px]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-bg to-transparent" aria-hidden />
+        <div className="mx-auto mt-12 max-w-xl px-2 pb-20 text-start">
+          <HeroCode students={students} />
+        </div>
       </section>
 
       <Reveal>
