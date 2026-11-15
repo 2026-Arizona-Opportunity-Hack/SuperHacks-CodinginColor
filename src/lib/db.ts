@@ -56,5 +56,9 @@ async function connect(): Promise<Db> {
     const { seed } = await import("./seed");
     await seed(database);
   }
+  // Demo installs: the seeded CIC instructor is a curriculum editor (idempotent; also upgrades older demo databases).
+  if (process.env.SEED_DEMO_DATA !== "false") {
+    await database.query("UPDATE users SET curriculum_editor = true WHERE email = 'instructor@codingincolor.org' AND NOT curriculum_editor");
+  }
   return database;
 }

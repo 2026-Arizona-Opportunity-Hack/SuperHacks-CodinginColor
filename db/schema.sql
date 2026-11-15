@@ -202,6 +202,9 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_enabled boolean NOT NULL DEFAULT
 ALTER TABLE users ADD COLUMN IF NOT EXISTS backup_codes text[] NOT NULL DEFAULT '{}'; -- SHA-256 hashes
 ALTER TABLE users ADD COLUMN IF NOT EXISTS password_changed_at timestamptz NOT NULL DEFAULT now();
 ALTER TABLE users ADD COLUMN IF NOT EXISTS totp_last_step bigint NOT NULL DEFAULT 0; -- blocks replay of a used code
+-- Curriculum editing is an explicit grant (by an admin). Self-serve sign-up never sets it, so typing
+-- "Coding in Color" as your organization does not give edit rights.
+ALTER TABLE users ADD COLUMN IF NOT EXISTS curriculum_editor boolean NOT NULL DEFAULT false;
 
 -- Second step of a 2FA sign-in: short-lived, single-use.
 CREATE TABLE IF NOT EXISTS mfa_challenges (
