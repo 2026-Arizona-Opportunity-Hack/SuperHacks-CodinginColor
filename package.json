@@ -12,7 +12,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "db:reset": "tsx scripts/reset-db.ts",
-    "test": "tsx --test tests/*.test.ts"
+    "test": "PGLITE_DIR=memory tsx --conditions=react-server --test tests/*.test.ts"
   },
   "dependencies": {
     "@codemirror/lang-python": "6.2.1",
