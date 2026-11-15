@@ -27,3 +27,10 @@ target/
 .DS_Store
 Thumbs.db
 *.log
+
+# App
+.data/
+.vercel/
+tsconfig.tsbuildinfo
+next-env.d.ts
+.keys/
