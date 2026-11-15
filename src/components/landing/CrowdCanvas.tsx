@@ -59,11 +59,12 @@ export function CrowdCanvas({
     const available: Peep[] = [];
     const crowd: Peep[] = [];
     let ticking = false;
+    let s = scale; // effective size; smaller on narrow screens so phones aren't one solid wall of people
     let disposed = false;
 
     const reset = (peep: Peep) => {
       const direction = Math.random() > 0.5 ? 1 : -1;
-      const offsetY = (100 - 250 * gsap.parseEase("power2.in")(Math.random())) * scale;
+      const offsetY = (100 - 250 * gsap.parseEase("power2.in")(Math.random())) * s;
       const startY = stage.height - peep.height + offsetY;
       const startX = direction === 1 ? -peep.width : stage.width + peep.width;
       const endX = direction === 1 ? stage.width : 0;
@@ -80,7 +81,7 @@ export function CrowdCanvas({
       const tl = gsap.timeline();
       tl.timeScale(rand(0.5, 1.5));
       tl.to(peep, { duration: xDuration, x: endX, ease: "none" }, 0);
-      tl.to(peep, { duration: yDuration, repeat: xDuration / yDuration, yoyo: true, y: startY - 10 * scale }, 0);
+      tl.to(peep, { duration: yDuration, repeat: xDuration / yDuration, yoyo: true, y: startY - 10 * s }, 0);
       return tl;
     };
 
@@ -113,6 +114,11 @@ export function CrowdCanvas({
     const resize = () => {
       stage.width = canvas.clientWidth;
       stage.height = canvas.clientHeight;
+      s = stage.width < 640 ? scale * 0.55 : scale;
+      for (const p of all) {
+        p.width = p.rect[2] * s;
+        p.height = p.rect[3] * s;
+      }
       canvas.width = stage.width * devicePixelRatio;
       canvas.height = stage.height * devicePixelRatio;
       crowd.forEach((p) => p.walk?.kill());
