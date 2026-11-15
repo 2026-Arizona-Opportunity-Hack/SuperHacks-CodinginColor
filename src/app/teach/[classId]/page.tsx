@@ -162,7 +162,7 @@ export default async function ClassPage({ params, searchParams }: { params: Prom
                               <span className="text-xs text-muted">{pct}%</span>
                             </div>
                           </td>
-                          <td className="px-4 py-3 text-xs">
+                          <td className="min-w-[220px] px-4 py-3 text-xs">
                             {s.current ? (
                               <span>
                                 {s.current.module} → {s.current.activity}
@@ -171,8 +171,8 @@ export default async function ClassPage({ params, searchParams }: { params: Prom
                             ) : <span className="text-muted">—</span>}
                             {topStruggle && topStruggle[1] >= 2 && <span className="mt-1 block text-bad">struggling: {topStruggle[0]}</span>}
                           </td>
-                          <td className="px-4 py-3 font-mono text-xs">{g ? `${g.pre}→${g.post} (${g.gain >= 0 ? "+" : ""}${g.gain})` : "—"}</td>
-                          <td className="px-4 py-3 text-xs text-muted">{ago(s.last_active)}</td>
+                          <td className="whitespace-nowrap px-4 py-3 font-mono text-xs">{g ? `${g.pre}→${g.post} (${g.gain >= 0 ? "+" : ""}${g.gain})` : "—"}</td>
+                          <td className="whitespace-nowrap px-4 py-3 text-xs text-muted">{ago(s.last_active)}</td>
                           <td className="px-4 py-3"><StudentActions classId={classId} studentId={s.id} name={s.display_name} /></td>
                         </tr>
                       );

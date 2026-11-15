@@ -46,7 +46,7 @@ export function JourneyPath({ modules, labels, currentId }: { modules: JourneyMo
           </div>
         );
         return (
-          <motion.li key={m.id} initial={reduce ? false : { opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}>
+          <motion.li key={m.id} className="relative" initial={reduce ? false : { opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}>
             {open ? (
               <Link href={`/learn/m/${m.id}`} className="block rounded-2xl" aria-label={`${labels.module} ${m.position}: ${m.title}, ${status}`}>
                 {body}

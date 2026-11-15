@@ -95,7 +95,7 @@ export function HeroCode({ students }: { students: number }) {
         </div>
       </motion.div>
       <motion.div
-        className="card absolute -bottom-6 end-4 hidden px-4 py-3 sm:block"
+        className="card absolute -bottom-16 end-4 hidden px-4 py-3 sm:block"
         initial={reduce ? false : { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}

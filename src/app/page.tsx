@@ -29,7 +29,7 @@ export default async function Home() {
     <div className="relative">
       <div className="mesh lite-hide pointer-events-none absolute inset-x-[-20%] top-[-120px] -z-10 h-[620px]" aria-hidden />
 
-      <section className="grid items-center gap-10 pt-6 lg:grid-cols-[1.1fr_1fr] lg:pt-14">
+      <section className="grid items-center gap-10 pb-10 pt-6 lg:grid-cols-[1.1fr_1fr] lg:pt-14">
         <div>
           <Reveal>
             <span className="chip bg-brand/10 text-brand">{t("landing.badge")}</span>
@@ -58,14 +58,14 @@ export default async function Home() {
             <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4">
               <div>
                 <dt className="sr-only">{t("landing.stat1")}</dt>
-                <dd className="h-display text-3xl text-good">
+                <dd className="h-display text-3xl text-good" dir="ltr">
                   +<CountUp to={Math.round(gain?.gain ?? 0)} />
                 </dd>
                 <p className="text-xs text-muted">{t("landing.stat1")}</p>
               </div>
               <div>
                 <dt className="sr-only">{t("landing.stat2")}</dt>
-                <dd className="h-display text-3xl">
+                <dd className="h-display text-3xl" dir="ltr">
                   &lt;<CountUp to={10} />
                 </dd>
                 <p className="text-xs text-muted">{t("landing.stat2")}</p>

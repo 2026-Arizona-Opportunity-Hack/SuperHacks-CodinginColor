@@ -54,6 +54,17 @@ spreadsheets. CIC Learn replaces that with a link a teacher can share on Monday.
 - **Live class mode, raise hand, pair programming, XP/streaks/badges** (leaderboard opt-out), **consent-gated family view**, **gradebook CSV**, **offline mode** for slow school Wi-Fi.
 - **English, Spanish and Arabic** (right-to-left), plus a reading-mode menu: dyslexia-friendly font, high contrast, reduced motion, lite mode, dark mode.
 
+## Screenshots
+
+| | |
+|---|---|
+| ![Landing page](docs/screenshots/01-landing.png) | ![Student journey](docs/screenshots/02-student-journey.png) |
+| **Landing**: live learning-gain numbers | **Student journey**: modules unlock in order; late joiners can skip ahead |
+| ![Teacher dashboard](docs/screenshots/03-teacher-dashboard.png) | ![Admin](docs/screenshots/04-admin.png) |
+| **Teacher dashboard**: who's stuck, where, and an AI reteach plan | **Admin**: learning gain by concept and cohort, API keys, roles |
+| ![Playground hint](docs/screenshots/07-playground-hint.png) | ![Arabic](docs/screenshots/08-arabic-rtl.png) |
+| **Socratic hint**: a question, never the answer | **Arabic**: full right-to-left layout |
+
 ## Try it (demo data is seeded automatically)
 
 | Who | How |
