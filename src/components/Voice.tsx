@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Mic, MicOff } from "lucide-react";
 
 const SPEECH_LANG: Record<string, string> = { en: "en-US", es: "es-US", ar: "ar-SA" };
@@ -20,7 +20,9 @@ type Recognition = { lang: string; interimResults: boolean; onresult: (e: any) =
 export function VoiceButton({ onText, label, listeningLabel }: { onText: (s: string) => void; label: string; listeningLabel: string }) {
   const [listening, setListening] = useState(false);
   const rec = useRef<Recognition | null>(null);
-  const Ctor = typeof window !== "undefined" ? ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition) : null;
+  // Detect support after mount so the server and first client render match.
+  const [Ctor, setCtor] = useState<any>(null);
+  useEffect(() => setCtor(() => (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition || null), []);
   if (!Ctor) return null; // not supported (e.g. Firefox): typing still works
 
   const toggle = () => {

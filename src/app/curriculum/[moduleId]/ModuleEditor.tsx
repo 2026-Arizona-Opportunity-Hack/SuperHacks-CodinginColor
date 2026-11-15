@@ -1,8 +1,8 @@
 "use client";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowDown, ArrowUp, CheckCircle2, ChevronDown, Languages, Loader2, Plus, Save, Trash2 } from "lucide-react";
-import { addActivity, deleteActivity, deleteModule, moveActivity, saveActivity, saveModule, translateToNewModule } from "@/app/actions/curriculum";
+import { ArrowDown, ArrowUp, CheckCircle2, ChevronDown, Copy, Languages, Loader2, Plus, Save, Trash2 } from "lucide-react";
+import { addActivity, deleteActivity, deleteModule, duplicateModule, moveActivity, saveActivity, saveModule, translateToNewModule } from "@/app/actions/curriculum";
 import { ACTIVITY_KINDS } from "@/lib/content";
 import { CodeEditor } from "@/components/CodeEditor";
 
@@ -83,6 +83,18 @@ export function ModuleEditor({ module, lessons, readOnly, aiReady }: { module: M
                 })}
               >
                 <Languages className="h-4 w-4" aria-hidden /> Translate
+              </button>
+              <button
+                className="btn-ghost"
+                disabled={pending}
+                title="Copy this module into a new draft you can adapt"
+                onClick={() => start(async () => {
+                  const r = await duplicateModule(module.id);
+                  if (r.ok) router.push(`/curriculum/${r.id}`);
+                  else setMsg(r.error);
+                })}
+              >
+                <Copy className="h-4 w-4" aria-hidden /> Remix
               </button>
               <button
                 className="btn-ghost text-bad"
