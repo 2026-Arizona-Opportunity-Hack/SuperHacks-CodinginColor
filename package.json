@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "engines": { "node": ">=20.18" },
+  "engines": {
+    "node": ">=20.18"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,7 +16,9 @@
   },
   "dependencies": {
     "@codemirror/lang-python": "6.2.1",
+    "@codemirror/view": "6.43.15",
     "@electric-sql/pglite": "0.5.16",
+    "@types/qrcode": "1.5.5",
     "@uiw/react-codemirror": "4.25.12",
     "bcryptjs": "2.4.3",
     "canvas-confetti": "1.9.4",
@@ -24,6 +28,7 @@
     "openai": "4.104.0",
     "papaparse": "5.7.1",
     "pg": "8.23.1",
+    "qrcode": "1.5.4",
     "react": "19.1.10",
     "react-dom": "19.1.10",
     "server-only": "0.0.1",
