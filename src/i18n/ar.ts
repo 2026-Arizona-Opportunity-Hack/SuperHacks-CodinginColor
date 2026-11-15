@@ -191,6 +191,11 @@ export const ar: Dict = {
   "offline.unsupportedShort": "جرّبه على الموقع المنشور",
   "offline.updateHint": "محفوظ للاستخدام دون اتصال. انقر لتحديث النسخة.",
 
+  "offline.mode": "وضع عدم الاتصال",
+  "offline.on": "مفعّل",
+  "offline.off": "متوقف",
+  "offline.turnedOff": "تم إيقاف وضع عدم الاتصال وحُذفت النسخ المحفوظة من هذا الجهاز.",
+
   "common.save": "حفظ",
   "common.cancel": "إلغاء",
   "common.delete": "حذف",

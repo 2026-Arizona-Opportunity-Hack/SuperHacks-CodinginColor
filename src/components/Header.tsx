@@ -6,7 +6,7 @@ import { signOut } from "@/app/actions/session";
 import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ReadingMode } from "./ReadingMode";
-import { OfflineButton } from "./OfflineButton";
+import { OfflineToggle } from "./OfflineToggle";
 import { journey } from "@/lib/progress";
 
 export async function Header() {
@@ -43,7 +43,7 @@ export async function Header() {
           ))}
         </nav>
         <div className="ms-auto flex items-center gap-2">
-          <OfflineButton urls={offlineUrls} />
+          <OfflineToggle urls={offlineUrls} />
           <LanguageSwitcher />
           <ReadingMode />
           {staff ? (

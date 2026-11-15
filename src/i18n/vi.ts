@@ -192,6 +192,11 @@ export const vi: Dict = {
   "offline.unsupportedShort": "Hãy thử trên trang chính thức",
   "offline.updateHint": "Đã lưu ngoại tuyến. Chạm để cập nhật bản lưu.",
 
+  "offline.mode": "Chế độ ngoại tuyến",
+  "offline.on": "Bật",
+  "offline.off": "Tắt",
+  "offline.turnedOff": "Đã tắt chế độ ngoại tuyến. Bản lưu trên thiết bị này đã được xóa.",
+
   "common.save": "Lưu",
   "common.cancel": "Hủy",
   "common.delete": "Xóa",

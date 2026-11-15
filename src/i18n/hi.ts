@@ -192,6 +192,11 @@ export const hi: Dict = {
   "offline.unsupportedShort": "लाइव साइट पर आज़माएँ",
   "offline.updateHint": "ऑफ़लाइन के लिए सेव है। कॉपी अपडेट करने के लिए टैप करें।",
 
+  "offline.mode": "ऑफ़लाइन मोड",
+  "offline.on": "चालू",
+  "offline.off": "बंद",
+  "offline.turnedOff": "ऑफ़लाइन मोड बंद है। इस डिवाइस से सेव की गई कॉपी हटा दी गई।",
+
   "common.save": "सेव करें",
   "common.cancel": "रद्द करें",
   "common.delete": "हटाएँ",

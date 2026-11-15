@@ -192,6 +192,11 @@ export const pt: Dict = {
   "offline.unsupportedShort": "Tente no site publicado",
   "offline.updateHint": "Salvo para offline. Toque para atualizar a cópia.",
 
+  "offline.mode": "Modo offline",
+  "offline.on": "Ligado",
+  "offline.off": "Desligado",
+  "offline.turnedOff": "Modo offline desligado. As cópias salvas foram removidas deste aparelho.",
+
   "common.save": "Salvar",
   "common.cancel": "Cancelar",
   "common.delete": "Excluir",

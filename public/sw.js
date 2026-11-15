@@ -3,7 +3,7 @@
  *  - Pages: network-first; when offline, fall back to the last copy or /offline.
  *  - Lesson pages are cached so a student can keep reading; they're wiped when a student switches
  *    (shared lab machines), and nothing from staff pages or APIs is ever cached. */
-const VERSION = "cic-v3";
+const VERSION = "cic-v4";
 const SHELL = ["/", "/join", "/play", "/offline", "/brand/cic-logo-256.png", "/manifest.webmanifest", "/pyodide-worker.js"];
 const CACHEABLE_PAGE = /^\/($|join$|play$|offline$|learn(\/m\/[0-9a-f-]{36}|\/catch-up)?$)/;
 
@@ -34,6 +34,11 @@ async function savePage(url) {
 
 self.addEventListener("message", (e) => {
   if (e.data === "clear-personal") e.waitUntil(caches.delete(`${VERSION}-pages`));
+  // Offline mode switched OFF: remove saved lessons and the Python runtime from this device.
+  if (e.data && e.data.type === "clear-offline") {
+    const port = e.ports[0];
+    e.waitUntil(Promise.all([caches.delete(`${VERSION}-pages`), caches.delete(`${VERSION}-pyodide`)]).then(() => port?.postMessage({ cleared: true })));
+  }
   // "Save for offline": pages the student will need + the whole Python runtime.
   if (e.data && e.data.type === "precache" && Array.isArray(e.data.urls)) {
     const port = e.ports[0];

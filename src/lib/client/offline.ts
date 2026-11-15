@@ -68,3 +68,60 @@ export function saveForOffline(urls: string[], onProgress: (done: number, total:
     sw.postMessage({ type: "precache", urls }, [ch.port2]);
   });
 }
+
+// ── Offline mode switch (ON = keep a saved copy on this device and refresh it; OFF = remove it) ──
+
+const MODE_KEY = "cic_offline_mode";
+const READY_KEY = "cic_offline_ready";
+export const offlineModeOn = () => {
+  try {
+    return localStorage.getItem(MODE_KEY) === "on";
+  } catch {
+    return false;
+  }
+};
+export const lastSaved = () => {
+  try {
+    return Number(localStorage.getItem(READY_KEY)) || 0;
+  } catch {
+    return 0;
+  }
+};
+function announce() {
+  window.dispatchEvent(new Event("cic-offline-mode"));
+}
+
+export async function turnOfflineOn(urls: string[], onProgress: (d: number, t: number) => void): Promise<boolean> {
+  const ok = await saveForOffline(urls, onProgress);
+  if (ok) {
+    try {
+      localStorage.setItem(MODE_KEY, "on");
+    } catch {}
+  }
+  announce();
+  return ok;
+}
+
+export function turnOfflineOff(): Promise<void> {
+  try {
+    localStorage.removeItem(MODE_KEY);
+    localStorage.removeItem(READY_KEY);
+  } catch {}
+  return new Promise((resolve) => {
+    const sw = navigator.serviceWorker?.controller;
+    if (!sw) {
+      announce();
+      return resolve();
+    }
+    const ch = new MessageChannel();
+    ch.port1.onmessage = () => {
+      announce();
+      resolve();
+    };
+    sw.postMessage({ type: "clear-offline" }, [ch.port2]);
+    setTimeout(() => {
+      announce();
+      resolve();
+    }, 3000);
+  });
+}
